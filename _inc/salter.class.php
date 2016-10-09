@@ -3,21 +3,21 @@
 class Salter extends SalterCore{
     
     public function __construct(){
-        define("SALT_SHAKER_DOMAIN", "coltshaker");
-        add_action('admin_menu', array(__CLASS__, "add_menu_item"));
-        add_action("admin_init", array(__CLASS__, "add_settings_metabox"));
-        add_action( 'admin_enqueue_scripts', array(__CLASS__, "enqueue_admin_scripts") );
-        add_action( 'wp_ajax_change_salts_now', array(__CLASS__, "wp_ajax_change_salts_now") );
-        add_action( 'wp_ajax_save_salt_schd', array(__CLASS__, "wp_ajax_save_salt_schd") );
-        add_action("salt_shaker_change_salts", array(&$this, "shuffleSalts"));
+        define("SALT_SHAKER_DOMAIN", "saltshaker");
+        add_action('admin_menu', array(__CLASS__, 'add_menu_item'));
+        add_action('admin_init', array(__CLASS__, 'add_settings_metabox'));
+        add_action( 'admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_scripts') );
+        add_action( 'wp_ajax_change_salts_now', array(__CLASS__, 'wp_ajax_change_salts_now') );
+        add_action( 'wp_ajax_save_salt_schd', array(__CLASS__, 'wp_ajax_save_salt_schd') );
+        add_action('salt_shaker_change_salts', array(&$this, 'shuffleSalts'));
     }
     
     public static function add_menu_item(){
-        add_submenu_page( "tools.php",  __("Salt Shaker Settings", SALT_SHAKER_DOMAIN), __("Salt Shaker", SALT_SHAKER_DOMAIN), "manage_options", "salt_shaker", array(__CLASS__, "admin_page_content") );
+        add_submenu_page( 'tools.php',  __('Salt Shaker Settings', 'saltshaker'), __('Salt Shaker', 'saltshaker'), 'manage_options', 'salt_shaker', array(__CLASS__, 'admin_page_content') );
     }
     
     public static function add_settings_metabox(){
-        add_meta_box( "salt_shaker_settings_metabox", __("Salt Changing Behaviour", SALT_SHAKER_DOMAIN), array(__CLASS__, "metabox_content") , "saltshaker", "normal" );
+        add_meta_box( 'salt_shaker_settings_metabox', __('Salt Changing Behaviour', 'saltshaker'), array(__CLASS__, 'metabox_content') , 'saltshaker', 'normal' );
     }
     
     public static function admin_page_content(){
@@ -33,7 +33,7 @@ class Salter extends SalterCore{
     }
     
     public function wp_ajax_change_salts_now(){
-        do_action("salt_shaker_change_salts");
+        do_action('salt_shaker_change_salts');
         die(0);
     }
     
@@ -48,5 +48,3 @@ class Salter extends SalterCore{
         die(0);
     }
 }
-
-?>

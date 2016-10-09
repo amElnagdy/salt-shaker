@@ -32,4 +32,3 @@ Copyright 2016 WPColt.
 
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
 $salt_shaker = new Salter();
-?>
