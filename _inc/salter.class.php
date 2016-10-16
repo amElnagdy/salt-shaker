@@ -3,7 +3,7 @@
 class Salter extends SalterCore{
     
     public function __construct(){
-        define("SALT_SHAKER_DOMAIN", "saltshaker");
+        define("SALT_SHAKER_DOMAIN", "salt-shaker");
         add_action('admin_menu', array(__CLASS__, 'add_menu_item'));
         add_action('admin_init', array(__CLASS__, 'add_settings_metabox'));
         add_action( 'admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_scripts') );
@@ -13,11 +13,11 @@ class Salter extends SalterCore{
     }
     
     public static function add_menu_item(){
-        add_submenu_page( 'tools.php',  __('Salt Shaker Settings', 'saltshaker'), __('Salt Shaker', 'saltshaker'), 'manage_options', 'salt_shaker', array(__CLASS__, 'admin_page_content') );
+        add_submenu_page( 'tools.php',  __('Salt Shaker Settings', 'salt-shaker'), __('Salt Shaker', 'salt-shaker'), 'manage_options', 'salt_shaker', array(__CLASS__, 'admin_page_content') );
     }
     
     public static function add_settings_metabox(){
-        add_meta_box( 'salt_shaker_settings_metabox', __('Salt Changing Behaviour', 'saltshaker'), array(__CLASS__, 'metabox_content') , 'saltshaker', 'normal' );
+        add_meta_box( 'salt_shaker_settings_metabox', __('Salt Changing Behaviour', 'salt-shaker'), array(__CLASS__, 'metabox_content') , 'saltshaker', 'normal' );
     }
     
     public static function admin_page_content(){

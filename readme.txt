@@ -37,10 +37,7 @@ Feel free to [fork the project on GitHub](https://github.com/amElnagdy/salt-shak
 Post detailed information about the issue in the [support forum](http://wordpress.org/support/plugin/salt-shaker) and we will work to fix it.
 
 == Screenshots ==
-1.
-2.
-3.
-4.
+1. Plugin Settings.
 
 == Changelog ==
 

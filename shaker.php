@@ -8,7 +8,7 @@ Version: 1.0
 Author: WPColt
 Author URI: https://wpcolt.com/
 License: GPLv2 or later
-Text Domain: saltshaker
+Text Domain: salt-shaker
 */
 
 /*
