@@ -2,6 +2,7 @@ jQuery(document).ready(function(){
    
    jQuery(document).on("change", ["#schedualed_salt_changer", "#schedualed_salt_value"], function(e){
        jQuery("#saving_spinner").css("visibility", "visible");
+       jQuery("#change_salts_now").prop("disabled", "disabled");
        jQuery.post(
             ajaxurl, 
             {
@@ -11,12 +12,17 @@ jQuery(document).ready(function(){
             }, 
             function(response){
                 jQuery("#saving_spinner").css("visibility", "hidden");
+                console.log(response);
+                setTimeout(function(){
+                    jQuery("#change_salts_now").prop("disabled", "");
+                }, 3000);
             }
         );
    });
    
    jQuery("#change_salts_now").click(function(e){
        jQuery("#saving_spinner").css("visibility", "visible");
+       jQuery("#change_salts_now").prop("disabled", "disabled");
        jQuery.post(
             ajaxurl, 
             {
@@ -24,6 +30,10 @@ jQuery(document).ready(function(){
             }, 
             function(response){
                 jQuery("#saving_spinner").css("visibility", "hidden");
+                console.log(response);
+                setTimeout(function(){
+                    jQuery("#change_salts_now").prop("disabled", "");
+                }, 3000);
             }
         );
    });
