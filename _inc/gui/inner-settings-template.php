@@ -11,7 +11,7 @@
 <?php esc_html_e('Bases', 'saltshaker')?>
         </div>
         <div>
-            <p><?php esc_html_e('Change WP Salts Immediately (will invalidate all current NONCES', 'saltshaker') ?></p>
+            <p><?php esc_html_e('Change WP Salts Immediately (will invalidate all current NONCES)', 'saltshaker') ?></p>
             <input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary" value="<?php esc_html_e('Change Now', 'saltshaker')?>"/> <div class="spinner" id="saving_spinner"></div>
         </div>
     </div>
