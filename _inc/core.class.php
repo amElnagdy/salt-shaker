@@ -5,11 +5,11 @@ class SalterCore{
     
     public function shuffleSalts(){
         $this->salts_array = array(
-            "AUTH_KEY",
+            "define('AUTH_KEY',",
             "SECURE_AUTH_KEY",
             "LOGGED_IN_KEY",
             "NONCE_KEY",
-            "AUTH_SALT",
+            "define('AUTH_SALT',",
             "SECURE_AUTH_SALT",
             "LOGGED_IN_SALT",
             "NONCE_SALT",
@@ -54,3 +54,5 @@ class SalterCore{
         }
     }
 }
+
+?>

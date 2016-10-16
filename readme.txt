@@ -13,12 +13,12 @@ Salt Shaker enhances WordPress security by changing WordPress security keys and 
 
 Like Salt Shaker? Consider leaving a [5 star review](https://wordpress.org/support/plugin/salt-shaker/reviews/).
 
-Check out the [Plugin Homepage](http://schema.press/) for more info and [documentation](http://schema.press/docs/).
-
 **Salt Shaker Features**
 
+* Improve your WordPress security.
 * Easy to use, set it and forget it, with minimal settings.
-*
+* Manual and immediate WP security keys and salts changing.
+* Set automated schedule for keys and salts change.
 
 **Developers?**
 
@@ -34,13 +34,13 @@ Feel free to [fork the project on GitHub](https://github.com/amElnagdy/salt-shak
 
 = The plugin isn't working or have a bug? =
 
-Post detailed information about the issue in the [support forum](http://wordpress.org/support/plugin/schema) and we will work to fix it.
+Post detailed information about the issue in the [support forum](http://wordpress.org/support/plugin/salt-shaker) and we will work to fix it.
 
 == Screenshots ==
-1. Knowledge Graph settings tab.
-2. Create new schema type screen.
-3. Create post meta fields with Post Meta Box generator feature.
-4. Google Structured Data Testing Tool.
+1.
+2.
+3.
+4.
 
 == Changelog ==
 
