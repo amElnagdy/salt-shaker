@@ -1,18 +1,17 @@
 <?php
-
-/**
+/*
 Plugin Name: Salt Shaker
-Plugin URI: https://wpcolt.com/shaker
+Plugin URI: https://wpcolt.com/
 Description: A plugin that changes the WP salt values.
-Version: 1.0
+Version: 1.1
 Author: WPColt
 Author URI: https://wpcolt.com/
 License: GPLv2 or later
 Text Domain: salt-shaker
+Domain Path: /lang
 */
 
 /*
-
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -32,3 +31,8 @@ Copyright 2016 WPColt.
 
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
 $salt_shaker = new Salter();
+
+function salt_shaker_load_plugin_textdomain() {
+    load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
+}
+add_action( 'plugins_loaded', 'salt_shaker_load_plugin_textdomain' );

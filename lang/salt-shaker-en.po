@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-17 20:03+0200\n"
+"PO-Revision-Date: 2016-10-17 20:04+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Eazy Po 0.9.5.3\n"
+
+#: _inc/salter.class.php:16 _inc/gui/settings-template.php:2
+msgid "Salt Shaker Settings"
+msgstr ""
+
+#: _inc/salter.class.php:16
+msgid "Salt Shaker"
+msgstr ""
+
+#: _inc/salter.class.php:20
+msgid "Salt Changing Behaviour"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:4
+msgid ""
+"Changing WP Keys and Salts will force all logged-in users to login again."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:5
+msgid "Scheduled Change:"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:6
+msgid "Set scheduled job for automated Salt changing:"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:7
+msgid "Change WP Keys and Salts on"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:9
+msgid "Daily"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:10
+msgid "Weekly"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:11
+msgid "Monthly"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:13
+msgid "Basis."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:16
+msgid "Immediate Change:"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:17
+msgid ""
+"When you click the following button, WP keys and salts will change "
+"immediately."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:19
+msgid "Change Now"
+msgstr ""

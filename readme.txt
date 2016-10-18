@@ -3,7 +3,7 @@ Contributors: nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies
 Requires at least: 3.0
 Tested up to: 4.6.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,8 @@ Salt Shaker enhances WordPress security by changing WordPress security keys and 
 == Description ==
 
 Like Salt Shaker? Consider leaving a [5 star review](https://wordpress.org/support/plugin/salt-shaker/reviews/).
+
+[youtube https://www.youtube.com/watch?v=SbbExLs7r8g]
 
 **Salt Shaker Features**
 
@@ -40,6 +42,9 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.1 =
+* Few enhancements
+* Multilingual Ready
 
 = 1.0 =
 * Initial Release
