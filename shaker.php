@@ -3,12 +3,12 @@
 Plugin Name: Salt Shaker
 Plugin URI: https://wpcolt.com/
 Description: A plugin that changes the WP salt values.
-Version: 1.1
+Version: 1.1.1
 Author: WPColt
 Author URI: https://wpcolt.com/
 License: GPLv2 or later
 Text Domain: salt-shaker
-Domain Path: /lang
+Domain Path: /languages
 */
 
 /*
@@ -33,6 +33,6 @@ include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
 $salt_shaker = new Salter();
 
 function salt_shaker_load_plugin_textdomain() {
-    load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
+    load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'plugins_loaded', 'salt_shaker_load_plugin_textdomain' );

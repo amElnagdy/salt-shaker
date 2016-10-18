@@ -3,7 +3,7 @@ Contributors: nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies
 Requires at least: 3.0
 Tested up to: 4.6.1
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,14 +42,12 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.1.1 =
+* Edited Arabic translation file.
+
 = 1.1 =
 * Few enhancements
 * Multilingual Ready
 
 = 1.0 =
 * Initial Release
-
-== Upgrade Notice ==
-
-= 1.1 =
-In this update, a bug got fixed and a couple of other enhancements which enhance plugin settings usability has been applied. Please, upgrade now to get these enhancements.
