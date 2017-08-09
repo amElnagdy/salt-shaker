@@ -16,7 +16,7 @@
             <h3><?php esc_html_e('Immediate Change:', 'salt-shaker')?></h3>
             <p><?php esc_html_e('When you click the following button, WP keys and salts will change immediately.', 'salt-shaker')?></p>
 
-            <input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary" value="<?php esc_html_e('Change Now', 'salt-shaker')?>"/> <div class="spinner" id="saving_spinner"></div>
+            <input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary" value="<?php esc_attr_e('Change Now', 'salt-shaker')?>"/> <div class="spinner" id="saving_spinner"></div>
         </div>
     </div>
 </div>
