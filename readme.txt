@@ -2,8 +2,8 @@
 Contributors: nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies
 Requires at least: 3.0
-Tested up to: 4.6.1
-Stable tag: 1.1.1
+Tested up to: 4.8
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,12 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.1.3 =
+* WordPress 4.8 Compatibility.
+
+= 1.1.2 =
+* WordPress 4.7 Compatibility.
+
 = 1.1.1 =
 * Edited Arabic translation file.
 

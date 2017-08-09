@@ -10,4 +10,5 @@
 				</div>
 			</div>
 		</form>
+	<div>If you find this plugin useful, please <a href="https://wordpress.org/support/plugin/salt-shaker/reviews/?rate=5#new-post" target="_blank">Rate it</a> on WordPress.org :-) </div>
 </div>
