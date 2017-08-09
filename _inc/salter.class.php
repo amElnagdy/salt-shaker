@@ -33,11 +33,17 @@ class Salter extends SalterCore{
     }
     
     public function wp_ajax_change_salts_now(){
+        if ( !current_user_can( 'administrator' ) ) {
+	        wp_die( -1 );
+        }
         do_action('salt_shaker_change_salts');
         die(0);
     }
     
     public function wp_ajax_save_salt_schd(){
+	    if ( !current_user_can( 'administrator' ) ) {
+		    wp_die( -1 );
+	    }
         update_option("salt_shaker_update_interval", $_POST["interval"]);
         update_option("salt_shaker_autoupdate_enabled", $_POST["enabled"]);
         if(isset($_POST["enabled"]) && $_POST["enabled"] == "true"){
