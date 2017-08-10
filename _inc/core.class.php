@@ -24,7 +24,7 @@ class SalterCore{
     
     public function writeSalts($salts_array, $new_salts){
         $config_file = ABSPATH . "wp-config.php";
-        $tmp_config_file = ABSPATH . "wp-config.php.tmp";
+        $tmp_config_file = ABSPATH . "wp-config-tmp.php";
         if(file_exists($config_file)){
             foreach($salts_array as $salt_key => $salt_value){
                 $readin_config = fopen($config_file, 'r');
