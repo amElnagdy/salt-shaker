@@ -8,7 +8,8 @@ jQuery(document).ready(function(){
             {
                 'action': 'save_salt_schd',
                 'interval': jQuery("#schedualed_salt_value").val(),
-                'enabled': jQuery("#schedualed_salt_changer").is(":checked")
+                'enabled': jQuery("#schedualed_salt_changer").is(":checked"),
+                '_ssnonce_scheduled': jQuery("#_ssnonce_scheduled").val()
             }, 
             function(response){
                 jQuery("#saving_spinner").css("visibility", "hidden");
@@ -26,7 +27,8 @@ jQuery(document).ready(function(){
        jQuery.post(
             ajaxurl, 
             {
-                'action': 'change_salts_now'
+                'action': 'change_salts_now',
+                '_ssnonce_now': jQuery("#_ssnonce_now").val()
             }, 
             function(response){
                 jQuery("#saving_spinner").css("visibility", "hidden");
