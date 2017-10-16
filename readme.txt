@@ -1,9 +1,9 @@
 === Salt Shaker ===
 Contributors: nagdy
-Tags: security, salts, salt keys, security keys, authentication keys, login, cookies
+Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 3.0
-Tested up to: 4.8
-Stable tag: 1.1.6
+Tested up to: 4.9
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,11 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.2 =
+* Tested with the upcoming WordPress 4.9
+* #9 -  Change salts if wp-config.php is moved one directory higher than the document root
+* Setting the right permission to wp-config.php after changing the salts.
+
 = 1.1.6 =
 * #8 - Change line endings to LF
 

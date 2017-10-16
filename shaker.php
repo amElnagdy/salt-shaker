@@ -3,7 +3,7 @@
 Plugin Name: Salt Shaker
 Plugin URI: https://wpcolt.com/
 Description: A plugin that changes the WP salt values to enhance and strengthen WordPress security.
-Version: 1.1.6
+Version: 1.2
 Author: WPColt
 Author URI: https://wpcolt.com/
 License: GPLv2 or later
