@@ -44,8 +44,8 @@ Post detailed information about the issue in the [support forum](http://wordpres
 == Changelog ==
 = 1.2 =
 * Tested with the upcoming WordPress 4.9
-* #9 -  Change salts if wp-config.php is moved one directory higher than the document root
-* Setting the right permission to wp-config.php after changing the salts.
+* #9 - Change salts if wp-config.php is moved one directory higher than the document root
+* Setting the right permission to wp-config.php after changing the salts according to Codex recommendations.
 
 = 1.1.6 =
 * #8 - Change line endings to LF

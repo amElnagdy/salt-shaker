@@ -23,6 +23,7 @@ class SalterCore {
 	}
 
 	public function writeSalts( $salts_array, $new_salts ) {
+		//Check if the config file outside the installation folder
 		$config_file     = ( file_exists( ABSPATH . 'wp-config.php' ) ) ? ( ABSPATH . 'wp-config.php' ) : ( dirname( ABSPATH ) . '/wp-config.php' );
 		$tmp_config_file = ( file_exists( ABSPATH . 'wp-config.php' ) ) ? ( ABSPATH . 'wp-config-tmp.php' ) : ( dirname( ABSPATH ) . '/wp-config-tmp.php' );
 
@@ -50,10 +51,11 @@ class SalterCore {
 				} else {
 					unlink( $tmp_config_file );
 				}
-				clearstatcache();
 				/* TODO: Create a filter or an option to update the permissions*/
 				//set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Changing_File_Permissions
-				chmod( $config_file, 0440 );
+				if (function_exists(chmod())){
+					chmod( $config_file, 0440 );
+				}
 			}
 		}
 	}
