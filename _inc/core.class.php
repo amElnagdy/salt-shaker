@@ -53,10 +53,8 @@ class SalterCore {
 				}
 				/* TODO: Create a filter or an option to update the permissions*/
 				//set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Changing_File_Permissions
-				if (function_exists(chmod())){
-					chmod( $config_file, 0440 );
-				}
+				chmod( $config_file, 0440 );
 			}
 		}
-	}
+}
 }
