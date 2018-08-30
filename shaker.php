@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Salt Shaker
-Plugin URI: https://wpcolt.com/
+Plugin URI: https://nagdy.net/
 Description: A plugin that changes the WP salt values to enhance and strengthen WordPress security.
-Version: 1.2
-Author: WPColt
-Author URI: https://wpcolt.com/
+Version: 1.2.1
+Author: Nagdy
+Author URI: https://nagdy.net/
 License: GPLv2 or later
 Text Domain: salt-shaker
 Domain Path: /languages
@@ -26,7 +26,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Copyright 2016 WPColt.
+Copyright 2016 Nagdy.net.
 */
 
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
