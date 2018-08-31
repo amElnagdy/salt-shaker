@@ -60,6 +60,9 @@ class Salter extends SalterCore
         update_option("salt_shaker_update_interval", $_POST["interval"]);
         update_option("salt_shaker_autoupdate_enabled", $_POST["enabled"]);
         if (isset($_POST["enabled"]) && $_POST["enabled"] == "true") {
+	        //make sure there's no current jobs before making a new one
+	        wp_clear_scheduled_hook('salt_shaker_change_salts');
+	        //now you can schedule the job.
             wp_schedule_event(time(), $_POST["interval"], "salt_shaker_change_salts");
         } else {
             wp_clear_scheduled_hook('salt_shaker_change_salts');

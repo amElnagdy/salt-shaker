@@ -26,9 +26,10 @@ class SalterCore
 
     public function writeSalts($salts_array, $new_salts)
     {
-        //Check if wp-config.php exists above the root directory
+	    /* TODO: Improve the way we check the existence of the config file. See wp-admin/setup-config.php*/
+	    //Check if wp-config.php exists above the root directory
         $config_file = (file_exists(ABSPATH . 'wp-config.php')) ? ABSPATH . 'wp-config.php' : ABSPATH . '../wp-config.php';
-        $tmp_config_file = (file_exists(ABSPATH . 'wp-config.php')) ? (ABSPATH . 'wp-config-tmp.php') : ABSPATH . '../wp-config-temp.php';
+        $tmp_config_file = (file_exists(ABSPATH . 'wp-config.php')) ? ABSPATH . 'wp-config-tmp.php' : ABSPATH . '../wp-config-temp.php';
 
         if (file_exists($config_file)) {
             foreach ($salts_array as $salt_key => $salt_value) {
