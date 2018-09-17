@@ -28,6 +28,7 @@
         </div>
         <div>
             <h3><?php esc_html_e( 'Immediate Change:', 'salt-shaker' ) ?></h3>
+            <p class="keys_updated_message" style="display: none; color:green; font-weight: bold"><?php _e( "Keys have been updated, you'll be redirected to the login page in few seconds." ) ?></p>
             <p><?php esc_html_e( 'When you click the following button, WP keys and salts will change immediately. And you will need to login again.', 'salt-shaker' ) ?></p>
 
             <input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary"
