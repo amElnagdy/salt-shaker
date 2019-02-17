@@ -42,6 +42,16 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.2.2 =
+* Redirect to the login page after the immediate change action.
+* Check if wp-config.php is writable. How the heck this was missing?!
+
+= 1.2.1 =
+* Tested with the upcoming WordPress 5.0
+* #11 - Added more interval times, quarterly and bianually.
+* Fixed an issue with wp-config being in outside the root directory.
+* Fixed a bug when updating the cron, now the old cron job is deleted.
+
 = 1.2 =
 * Tested with the upcoming WordPress 4.9
 * #9 - Change salts if wp-config.php is moved one directory higher than the document root

@@ -1,3 +1,17 @@
+<?php
+$config_file_checker = new SalterCore();
+$is_config = $config_file_checker->config_file_path();
+if (! $is_config){
+    wp_die( '<p>' . sprintf(
+        /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
+            __( 'The file %1$s is not writable. Read how to setup the correct permissions<a href="%2$s"> on WordPress codex</a>.', 'salt-shaker' ),
+            '<code>wp-config.php</code>',
+            'https://codex.wordpress.org/Changing_File_Permissions'
+        ) . '</p>'
+    );
+}
+else {
+?>
 <div class="salt_shaker_inner_settings">
     <div>
         <div>
@@ -28,6 +42,9 @@
         </div>
         <div>
             <h3><?php esc_html_e( 'Immediate Change:', 'salt-shaker' ) ?></h3>
+            <p class="keys_updated_message" style="display: none; color:green; font-weight: bold">
+                <?php esc_html_e( "Keys have been updated, you'll be redirected to the login page in a few seconds.", 'salt-shaker' ) ?>
+            </p>
             <p><?php esc_html_e( 'When you click the following button, WP keys and salts will change immediately. And you will need to login again.', 'salt-shaker' ) ?></p>
 
             <input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary"
@@ -37,3 +54,4 @@
         </div>
     </div>
 </div>
+<?php }?>

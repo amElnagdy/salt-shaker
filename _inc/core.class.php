@@ -24,15 +24,33 @@ class SalterCore
 
     }
 
-    public function writeSalts($salts_array, $new_salts)
-    {
-	    /* TODO: Improve the way we check the existence of the config file. See wp-admin/setup-config.php*/
-	    //Check if wp-config.php exists above the root directory
-        $config_file = (file_exists(ABSPATH . 'wp-config.php')) ? ABSPATH . 'wp-config.php' : ABSPATH . '../wp-config.php';
-        $tmp_config_file = (file_exists(ABSPATH . 'wp-config.php')) ? ABSPATH . 'wp-config-tmp.php' : ABSPATH . '../wp-config-temp.php';
+    /**
+     * Find the correct wp-config.php file. It supports one-level up.
+     *
+     * @since 1.2.2
+     *
+     * @return string|bool The path of the wp-config.php or false if it's not found
+     */
+    public function config_file_path() {
+        $config_file =  ABSPATH . 'wp-config.php' ;
+        $config_file_up =  ABSPATH . '../wp-config.php' ;
 
-        if (file_exists($config_file)) {
-            foreach ($salts_array as $salt_key => $salt_value) {
+        if ( file_exists( $config_file ) && is_writable( $config_file ) ) {
+            return $config_file;
+        } elseif ( file_exists( $config_file_up ) && is_writable( $config_file_up ) && ! file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+            return $config_file_up;
+        }
+
+        return false;
+    }
+
+    public function writeSalts($salts_array, $new_salts){
+
+        $config_file = $this -> config_file_path();
+
+        $tmp_config_file = ABSPATH . 'wp-config-tmp.php';
+
+        foreach ($salts_array as $salt_key => $salt_value) {
 
                 $readin_config = fopen($config_file, 'r');
                 $writing_config = fopen($tmp_config_file, 'w');
@@ -60,5 +78,4 @@ class SalterCore
                 chmod($config_file, 0666);
             }
         }
-    }
 }

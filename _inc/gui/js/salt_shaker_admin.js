@@ -32,9 +32,10 @@ jQuery(document).ready(function(){
             }, 
             function(response){
                 jQuery("#saving_spinner").css("visibility", "hidden");
-                console.log(response);
+                jQuery(".keys_updated_message").show();
                 setTimeout(function(){
                     jQuery("#change_salts_now").prop("disabled", "");
+                    location.reload();
                 }, 3000);
             }
         );
