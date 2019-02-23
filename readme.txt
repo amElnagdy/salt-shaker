@@ -2,8 +2,8 @@
 Contributors: nagdy, ahmedgeek
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 1.2.1
+Tested up to: 5.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,8 +43,11 @@ Post detailed information about the issue in the [support forum](http://wordpres
 
 == Changelog ==
 = 1.2.2 =
-* Redirect to the login page after the immediate change action.
-* Check if wp-config.php is writable. How the heck this was missing?!
+* Tested with WordPress 5.1.
+* Added: link to the settings page from the plugins page.
+* Added: redirect to the login page after the immediate change action.
+* Added: check if wp-config.php is writable. How the heck this was missing?!
+* Added: Filter to define a custom salts file. salt_shaker_salts_file
 
 = 1.2.1 =
 * Tested with the upcoming WordPress 5.0

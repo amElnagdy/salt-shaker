@@ -1,17 +1,15 @@
 <?php
 $config_file_checker = new SalterCore();
 $is_config = $config_file_checker->config_file_path();
-if (! $is_config){
-    wp_die( '<p>' . sprintf(
-        /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
-            __( 'The file %1$s is not writable. Read how to setup the correct permissions<a href="%2$s"> on WordPress codex</a>.', 'salt-shaker' ),
-            '<code>wp-config.php</code>',
-            'https://codex.wordpress.org/Changing_File_Permissions'
-        ) . '</p>'
+if (!$is_config) {
+    printf(
+    /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
+        __('The file %1$s is not writable. Read how to setup the correct permissions on <a href="%2$s">WordPress codex</a>.', 'salt-shaker'),
+        '<code>wp-config.php</code>',
+        'https://codex.wordpress.org/Changing_File_Permissions'
     );
-}
-else {
-?>
+} else {
+    ?>
 <div class="salt_shaker_inner_settings">
     <div>
         <div>

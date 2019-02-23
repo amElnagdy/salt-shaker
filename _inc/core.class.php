@@ -31,13 +31,16 @@ class SalterCore
      *
      * @return string|bool The path of the wp-config.php or false if it's not found
      */
-    public function config_file_path() {
-        $config_file =  ABSPATH . 'wp-config.php' ;
-        $config_file_up =  ABSPATH . '../wp-config.php' ;
+    public function config_file_path()
+    {
 
-        if ( file_exists( $config_file ) && is_writable( $config_file ) ) {
+        $salts_file_name = apply_filters('salt_shaker_salts_file', 'wp-config');
+        $config_file = ABSPATH . $salts_file_name . '.php';
+        $config_file_up = ABSPATH . '../' . $salts_file_name . '.php';
+
+        if (file_exists($config_file) && is_writable($config_file)) {
             return $config_file;
-        } elseif ( file_exists( $config_file_up ) && is_writable( $config_file_up ) && ! file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+        } elseif (file_exists($config_file_up) && is_writable($config_file_up) && !file_exists(dirname(ABSPATH) . '/wp-settings.php')) {
             return $config_file_up;
         }
 
@@ -78,4 +81,5 @@ class SalterCore
                 chmod($config_file, 0666);
             }
         }
+
 }

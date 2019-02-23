@@ -13,6 +13,7 @@ class Salter extends SalterCore
         add_action('wp_ajax_save_salt_schd', array(&$this, 'wp_ajax_save_salt_schd'));
         add_action('salt_shaker_change_salts', array(&$this, 'shuffleSalts'));
         add_filter('cron_schedules', array($this, 'cron_time_intervals'));  //Adjusting WP Cron
+        add_action( 'admin_notices',array($this,'salt_shaker_warning' ));
 
     }
 
@@ -114,5 +115,29 @@ class Salter extends SalterCore
             'display' => __('Every 6 Months')
         );
         return $schedules;
+    }
+
+
+    /**
+     * A warning message to be shown if the file that contains the salts isn't writable
+     *
+     * @since 1.2.2
+     */
+    public function salt_shaker_warning()
+    {
+
+        $config_file = SalterCore::config_file_path();
+        if (!$config_file && current_user_can('administrator')) {
+            ?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php printf(
+                    /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
+                        __('Salt Shaker: The file %1$s is not writable. Read how to setup the correct permissions on <a href="%2$s">WordPress codex</a>.', 'salt-shaker'),
+                        '<code>wp-config.php</code>',
+                        'https://codex.wordpress.org/Changing_File_Permissions'
+                    ); ?></p>
+            </div>
+            <?php
+        }
     }
 }
