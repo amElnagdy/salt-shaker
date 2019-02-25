@@ -1,12 +1,13 @@
 <?php
 $config_file_checker = new SalterCore();
 $is_config = $config_file_checker->config_file_path();
+$salts_file_name = apply_filters('salt_shaker_salts_file', 'wp-config');
 if (!$is_config) {
     printf(
     /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
-        __('The file %1$s is not writable. Read how to setup the correct permissions on <a href="%2$s">WordPress codex</a>.', 'salt-shaker'),
-        '<code>wp-config.php</code>',
-        'https://codex.wordpress.org/Changing_File_Permissions'
+        __('The file <code>%1$s</code> which contains your salt keys is not writable. First, make sure it exists then read how to setup the correct permissions on <a href="%2$s">WordPress codex</a>.', 'salt-shaker'),
+        $salts_file_name. '.php',
+        'https://wordpress.org/support/article/changing-file-permissions/'
     );
 } else {
     ?>

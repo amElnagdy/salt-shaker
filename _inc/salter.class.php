@@ -130,12 +130,19 @@ class Salter extends SalterCore
         if (!$config_file && current_user_can('administrator')) {
             ?>
             <div class="notice notice-error is-dismissible">
-                <p><?php printf(
-                    /* translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions */
-                        __('Salt Shaker: The file %1$s is not writable. Read how to setup the correct permissions on <a href="%2$s">WordPress codex</a>.', 'salt-shaker'),
-                        '<code>wp-config.php</code>',
-                        'https://codex.wordpress.org/Changing_File_Permissions'
-                    ); ?></p>
+                <p><?php
+                    $url = esc_url(admin_url('/tools.php?page=salt_shaker'));
+                    $link = sprintf(wp_kses(__('Salt Shaker is not working due to a configuration error. Please visit <a href="%s">the settings page</a> to resolve this error.', 'salt-shaker'),
+                        array(
+                            'a' => array(
+                                'href' => array()
+                            )
+                        )
+                    ),
+                        esc_url($url));
+                    echo $link;
+                    ?>
+                </p>
             </div>
             <?php
         }
