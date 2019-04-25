@@ -3,7 +3,7 @@
 Plugin Name: Salt Shaker
 Plugin URI: https://nagdy.net/
 Description: A plugin that changes the WP salt values to enhance and strengthen WordPress security.
-Version: 1.2.2
+Version: 1.2.3
 Author: Nagdy
 Author URI: https://nagdy.net/
 License: GPLv2 or later

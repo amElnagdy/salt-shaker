@@ -20,6 +20,10 @@ class SalterCore
         $returned_salts = file_get_contents("https://api.wordpress.org/secret-key/1.1/salt/");
         $this->new_salts = explode("\n", $returned_salts);
 
+        // Adding filters for additional salts
+        $this->new_salts = apply_filters('salt_shaker_salts', $this->new_salts);
+        $this->salts_array = apply_filters('salt_shaker_salt_ids', $this->salts_array);
+
         return $this->writeSalts($this->salts_array, $this->new_salts);
 
     }
@@ -77,8 +81,8 @@ class SalterCore
                     unlink($tmp_config_file);
                 }
                 /* TODO: Create a filter or an option to update the permissions*/
-                //set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Changing_File_Permissions
-                chmod($config_file, 0666);
+                //set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Hardening_WordPress#File_Permissions
+                chmod($config_file, 0640);
             }
         }
 

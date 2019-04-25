@@ -2,14 +2,16 @@
 Contributors: nagdy, ahmedgeek
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 4.0
-Tested up to: 5.1
-Stable tag: 1.2.2
+Tested up to: 5.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Salt Shaker enhances WordPress security by changing WordPress security keys and salts manually and automatically.
 
 == Description ==
+
+By using Salt Shaker plugin, you'll be able to harden your WordPress security. It helps you changing the salt keys either manually or automatically.
 
 Like Salt Shaker? Consider leaving a [5 star review](https://wordpress.org/support/plugin/salt-shaker/reviews/).
 
@@ -42,6 +44,10 @@ Post detailed information about the issue in the [support forum](http://wordpres
 1. Plugin Settings.
 
 == Changelog ==
+= 1.2.3 =
+* Changing the config permission to 0640
+* Added: filters for additional salts
+
 = 1.2.2 =
 * Tested with WordPress 5.1.
 * Added: link to the settings page from the plugins page.
