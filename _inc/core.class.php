@@ -59,31 +59,24 @@ class SalterCore
 
         $tmp_config_file = ABSPATH . 'wp-config-tmp.php';
 
-        foreach ($salts_array as $salt_key => $salt_value) {
+        $readin_config = fopen($config_file, 'r');
+        $writing_config = fopen($tmp_config_file, 'w');
 
-                $readin_config = fopen($config_file, 'r');
-                $writing_config = fopen($tmp_config_file, 'w');
-
-                $replaced = false;
-                while (!feof($readin_config)) {
-                    $line = fgets($readin_config);
-                    if (stristr($line, $salt_value)) {
-                        $line = $new_salts[$salt_key] . "\n";
-                        $replaced = true;
-                    }
-                    fputs($writing_config, $line);
-                }
-                fclose($readin_config);
-                fclose($writing_config);
-
-                if ($replaced) {
-                    rename($tmp_config_file, $config_file);
-                } else {
-                    unlink($tmp_config_file);
-                }
-                //keep the original permissions of wp-config.php
-                chmod($config_file, $perms );
+        while (!feof($readin_config)) {
+        		$line = fgets($readin_config);
+        		foreach ($salts_array as $salt_key => $salt_value) {
+               if (stristr($line, $salt_value)) {
+               	$line = $new_salts[$salt_key] . "\n";
+               }
             }
+            fputs($writing_config, $line);
         }
+
+        fclose($readin_config);
+        fclose($writing_config);
+        rename($tmp_config_file, $config_file);
+        //keep the original permissions of wp-config.php
+        chmod($config_file, $perms );
+    }
 
 }
