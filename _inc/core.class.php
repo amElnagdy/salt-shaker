@@ -54,6 +54,8 @@ class SalterCore
     public function writeSalts($salts_array, $new_salts){
 
         $config_file = $this -> config_file_path();
+        
+        $perms = fileperms($config_file); // Get the current permissions of wp-config.php
 
         $tmp_config_file = ABSPATH . 'wp-config-tmp.php';
 
@@ -71,7 +73,6 @@ class SalterCore
                     }
                     fputs($writing_config, $line);
                 }
-
                 fclose($readin_config);
                 fclose($writing_config);
 
@@ -80,9 +81,8 @@ class SalterCore
                 } else {
                     unlink($tmp_config_file);
                 }
-                /* TODO: Create a filter or an option to update the permissions*/
-                //set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Hardening_WordPress#File_Permissions
-                chmod($config_file, 0640);
+                //keep the original permissions of wp-config.php
+                chmod($config_file, $perms );
             }
         }
 
