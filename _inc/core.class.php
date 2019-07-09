@@ -54,36 +54,29 @@ class SalterCore
     public function writeSalts($salts_array, $new_salts){
 
         $config_file = $this -> config_file_path();
+        
+        $perms = fileperms($config_file); // Get the current permissions of wp-config.php
 
         $tmp_config_file = ABSPATH . 'wp-config-tmp.php';
 
-        foreach ($salts_array as $salt_key => $salt_value) {
+        $readin_config = fopen($config_file, 'r');
+        $writing_config = fopen($tmp_config_file, 'w');
 
-                $readin_config = fopen($config_file, 'r');
-                $writing_config = fopen($tmp_config_file, 'w');
-
-                $replaced = false;
-                while (!feof($readin_config)) {
-                    $line = fgets($readin_config);
-                    if (stristr($line, $salt_value)) {
-                        $line = $new_salts[$salt_key] . "\n";
-                        $replaced = true;
-                    }
-                    fputs($writing_config, $line);
-                }
-
-                fclose($readin_config);
-                fclose($writing_config);
-
-                if ($replaced) {
-                    rename($tmp_config_file, $config_file);
-                } else {
-                    unlink($tmp_config_file);
-                }
-                /* TODO: Create a filter or an option to update the permissions*/
-                //set the recommended permissions to wp-config.php read: https://codex.wordpress.org/Hardening_WordPress#File_Permissions
-                chmod($config_file, 0640);
+        while (!feof($readin_config)) {
+        		$line = fgets($readin_config);
+        		foreach ($salts_array as $salt_key => $salt_value) {
+               if (stristr($line, $salt_value)) {
+               	$line = $new_salts[$salt_key] . "\n";
+               }
             }
+            fputs($writing_config, $line);
         }
+
+        fclose($readin_config);
+        fclose($writing_config);
+        rename($tmp_config_file, $config_file);
+        //keep the original permissions of wp-config.php
+        chmod($config_file, $perms );
+    }
 
 }
