@@ -54,29 +54,32 @@ class SalterCore
     public function writeSalts($salts_array, $new_salts){
 
         $config_file = $this -> config_file_path();
-        
-        $perms = fileperms($config_file); // Get the current permissions of wp-config.php
+
+	    // Get the current permissions of wp-config.php
+        $config_permissions = fileperms($config_file);
 
         $tmp_config_file = ABSPATH . 'wp-config-tmp.php';
 
-        $readin_config = fopen($config_file, 'r');
-        $writing_config = fopen($tmp_config_file, 'w');
+	    $readin_config = fopen($config_file, 'r');
+	    $writing_config = fopen($tmp_config_file, 'w');
 
-        while (!feof($readin_config)) {
-        		$line = fgets($readin_config);
-        		foreach ($salts_array as $salt_key => $salt_value) {
-               if (stristr($line, $salt_value)) {
-               	$line = $new_salts[$salt_key] . "\n";
-               }
-            }
-            fputs($writing_config, $line);
-        }
+	    while (!feof($readin_config)) {
+		    $line = fgets($readin_config);
+		    foreach ($salts_array as $salt_key => $salt_value) {
+			    if (stristr($line, $salt_value)) {
+				    $line = $new_salts[$salt_key] . "\n";
+			    }
+		    }
+		    fputs($writing_config, $line);
+	    }
 
-        fclose($readin_config);
-        fclose($writing_config);
-        rename($tmp_config_file, $config_file);
+	    fclose($readin_config);
+	    fclose($writing_config);
+	    rename($tmp_config_file, $config_file);
+
+
         //keep the original permissions of wp-config.php
-        chmod($config_file, $perms );
+        chmod($config_file, $config_permissions );
     }
 
 }
