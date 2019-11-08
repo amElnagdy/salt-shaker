@@ -20,7 +20,7 @@ if (!$is_config) {
 				$next_schedule = date_i18n( get_option( 'date_format' ), wp_next_scheduled( 'salt_shaker_change_salts' ) );
 				?>
                 <p style="color:green; font-weight: bold">
-					<?php printf( __( 'The salt keys will be automatically changed on %s' ), $next_schedule ); ?>
+					<?php printf( __( 'The salt keys will be automatically changed on %s', 'salt-shaker'), $next_schedule ); ?>
                 </p>
 			<?php
 			}
