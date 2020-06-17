@@ -1,17 +1,15 @@
 <?php
-/*
+/**
 Plugin Name: Salt Shaker
 Plugin URI: https://nagdy.net/
 Description: A plugin that changes the WP salt values to enhance and strengthen WordPress security.
-Version: 1.2.5
+Version: 1.2.6
 Author: Nagdy
 Author URI: https://nagdy.net/
 License: GPLv2 or later
 Text Domain: salt-shaker
 Domain Path: /languages
-*/
 
-/*
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -27,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 Copyright 2020 Nagdy.net.
-*/
+ */
 
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
 $salt_shaker = new Salter();
