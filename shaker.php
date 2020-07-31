@@ -2,8 +2,8 @@
 /**
 Plugin Name: Salt Shaker
 Plugin URI: https://nagdy.net/
-Description: A plugin that changes the WP salt values to enhance and strengthen WordPress security.
-Version: 1.2.6
+Description: A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security.
+Version: 1.2.7
 Author: Nagdy
 Author URI: https://nagdy.net/
 License: GPLv2 or later
@@ -34,21 +34,34 @@ function salt_shaker_load_plugin_textdomain() {
     load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'plugins_loaded', 'salt_shaker_load_plugin_textdomain' );
+	
+	/**
+	 * Add a link to the settings page on the plugins.php page.
+	 *
+	 * @param $actions
+	 * @param $plugin_file
+	 *
+	 * @return array         List of modified plugin action links.
+	 * @since 1.2.7
+	 *
+	 */
 
-/**
- * Add a link to the settings page on the plugins.php page.
- *
- * @since 1.2.2
- *
- * @param  array $links List of existing plugin action links.
- * @return array         List of modified plugin action links.
- */
-function salt_shaker_settings_link($links)
-{
-    $links = array_merge(array(
-        '<a href="' . esc_url(admin_url('/tools.php?page=salt_shaker')) . '">' . __('Settings', 'salt-shaker') . '</a>'
-    ), $links);
-    return $links;
-}
-
-add_action('plugin_action_links_' . plugin_basename(__FILE__), 'salt_shaker_settings_link');
+	function salt_shaker_settings_link( $actions, $plugin_file ) {
+		static $plugin;
+		
+		if ( ! isset( $plugin ) ) {
+			$plugin = plugin_basename( __FILE__ );
+		}
+		if ( $plugin == $plugin_file ) {
+			
+			$settings  = array( 'settings' => '<a href="' . esc_url( admin_url( '/tools.php?page=salt_shaker' ) ) . '">' . __( 'Settings', 'salt-shaker' ) . '</a>' );
+			$site_link = array( 'support' => '<a href="' . esc_url( 'https://www.buymeacoffee.com/nagdy' ) . '" style="color:#0eb804;">' . __( 'Buy Me a Coffee!', 'salt-shaker' ) . '</a>' );
+			
+			$actions = array_merge( $settings, $actions );
+			$actions = array_merge( $site_link, $actions );
+			
+		}
+		
+		return $actions;
+	}
+	add_filter( 'plugin_action_links', 'salt_shaker_settings_link', 10, 5 );
