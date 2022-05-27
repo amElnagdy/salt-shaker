@@ -3,8 +3,8 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://www.buymeacoffee.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 4.0
-Tested up to: 5.9
-Stable tag: 1.3.0
+Tested up to: 6.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ Feel free to [fork the project on GitHub](https://github.com/amElnagdy/salt-shak
 
 == Frequently Asked Questions ==
 
+= Nothing happens? =
+
+Make sure that `wp-config.php` file has the salt keys. If for any reason the keys aren't there; you can always generate a set of keys from this link https://api.wordpress.org/secret-key/1.1/salt/ and add it to your `wp-config.php` file. Once that's done, the plugin will be able to shake them based on your settings.
+
 = The plugin isn't working or have a bug? =
 
 Post detailed information about the issue in the [support forum](http://wordpress.org/support/plugin/salt-shaker) and we will work to fix it.
@@ -64,19 +68,22 @@ Post detailed information about the issue in the [support forum](http://wordpres
 
 You can use this filter to define the  file location `salt_shaker_salts_file`. Example:
 In this example, the new location of the config file is in a folder that's outside WordPress location in a folder called `wpsecret`. Make sure to replace it with your secret location ;)
-```
-function salt_shaker_new_file($salts_file_name) {
+
+`function salt_shaker_new_file($salts_file_name) {
     $salts_file_name = '../wpsecret/wp-config';
     return $salts_file_name;
 }
 
-add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');
-```
+add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 == Screenshots ==
 1. Plugin Settings.
 
 == Changelog ==
+
+= 1.3.1 =
+* WordPress 6.0 compatibility.
+* Fix an issue with the AUTH_KEY and AUTH_SALT keys not being changed.
 
 = 1.3.0 =
 * Tested with WordPress 5.9.

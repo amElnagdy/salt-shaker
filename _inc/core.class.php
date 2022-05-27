@@ -6,11 +6,11 @@ class SalterCore {
 
 		public function shuffleSalts() {
 			$this->salts_array = array(
-				"define('AUTH_KEY',",
+				"'AUTH_KEY',",
 				'SECURE_AUTH_KEY',
 				'LOGGED_IN_KEY',
 				'NONCE_KEY',
-				"define('AUTH_SALT',",
+				"'AUTH_SALT',",
 				'SECURE_AUTH_SALT',
 				'LOGGED_IN_SALT',
 				'NONCE_SALT',
