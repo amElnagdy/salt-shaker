@@ -1,9 +1,16 @@
 <?php
-require_once('SalterOptions.php');
+
+namespace SaltShaker;
+
+require_once 'SalterOptions.php';
+
+use SalterCore;
+use SaltShaker\SalterOptions as SalterOptionsClass;
+
 class Salter extends SalterCore
 {
 
-	public SalterOptions $salterOptionsObject;
+	public SalterOptionsClass $salterOptionsObject;
 
 	public function __construct()
 	{
@@ -16,7 +23,7 @@ class Salter extends SalterCore
 		add_action('salt_shaker_change_salts', array(&$this, 'shuffleSalts'));
 		add_filter('cron_schedules', array($this, 'cron_time_intervals'));  //Adjusting WP Cron
 		add_action('admin_notices', array($this, 'salt_shaker_warning'));
-		$this->salterOptionsObject = SalterOptions::getInstance();
+		$this->salterOptionsObject = SalterOptionsClass::getInstance();
 	}
 
 	public static function add_menu_item()
@@ -48,6 +55,7 @@ class Salter extends SalterCore
 	public static function enqueue_admin_scripts()
 	{
 		wp_enqueue_script('salt_shaker_admin', plugin_dir_url(__FILE__) . 'gui/js/salt_shaker_admin.js', array("jquery"));
+		wp_enqueue_style('salt_shaker_admin_css', plugin_dir_url(__FILE__) . 'gui/css/salt_shaker_styles.css');
 	}
 
 	public function wp_ajax_change_salts_now()

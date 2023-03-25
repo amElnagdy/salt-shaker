@@ -28,6 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 Copyright 2023 Nagdy.net.
  */
 
+use SaltShaker\SalterOptions;
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -46,6 +48,8 @@ function salt_shaker_pro_deactivate()
 	}
 }
 register_activation_hook(__FILE__, 'salt_shaker_pro_deactivate');
+
+register_activation_hook(__FILE__, 'shakerSettingsMigrate');
 
 include_once(plugin_dir_path(__FILE__) . "_inc/freemius.php");
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
@@ -96,30 +100,24 @@ add_filter('plugin_action_links', 'salt_shaker_settings_link', 10, 5);
 
 /**
  * Action when Salt Shaker update
- * 
+ * the upgrader_process_complete action throws an error (Update fails)
  */
-add_action('upgrader_process_complete', 'shaker_upgrade', 10, 2);
+// add_action('upgrader_process_complete', 'shaker_upgrade', 10, 2);
 
-function shaker_upgrade($upgrader_object, $options)
+function shakerSettingsMigrate()
 {
 	$salterOptionsObject = SalterOptions::getInstance();
-	$current_plugin_path_name = plugin_basename(__FILE__);
-	if ($options['action'] == 'update' && $options['type'] == 'plugin') {
-		foreach ($options['plugins'] as $each_plugin) {
-			if ($each_plugin == $current_plugin_path_name) {
-				// Check if the shaker options array exist, if not, create the array, and save it.
-				if (count($salterOptionsObject->getSalterOptions()) == 0) {
-					$interval
-						= get_option('salt_shaker_update_interval');
-					if ($interval) {
-						$salterOptionsObject->setOption('salt_shaker_update_interval', $interval);
-					}
-					$salterOptionsObject->setOption('salt_shaker_autoupdate_enabled', get_option('salt_shaker_autoupdate_enabled', false));
-				}
-			}
+
+	if (count($salterOptionsObject->getSalterOptions()) == 0) {
+		$interval
+			= get_option('salt_shaker_update_interval');
+		if ($interval) {
+			$salterOptionsObject->setOption('salt_shaker_update_interval', $interval);
 		}
+		$salterOptionsObject->setOption('salt_shaker_autoupdate_enabled', get_option('salt_shaker_autoupdate_enabled', false));
 	}
 }
 
+use SaltShaker\Salter;
 
 $salt_shaker = new Salter();

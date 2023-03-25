@@ -1,5 +1,7 @@
 <?php
 
+namespace SaltShaker;
+
 class SalterOptions
 {
 
@@ -32,7 +34,7 @@ class SalterOptions
 		update_option('salt_shaker_options', $this->options);
 	}
 
-	private function getSalterOptions()
+	public function getSalterOptions()
 	{
 		return $this->options;
 	}

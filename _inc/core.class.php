@@ -83,4 +83,32 @@ class SalterCore
 		// Keep the original permissions of wp-config.php.
 		chmod($config_file, $config_permissions);
 	}
+
+	/**
+	 *	Fill the salts array with values
+	 *
+	 */
+	public function getSaltsArray(): array
+	{
+		$salts_keys = [
+			'AUTH_KEY',
+			'SECURE_AUTH_KEY',
+			'LOGGED_IN_KEY',
+			'NONCE_KEY',
+			'AUTH_SALT',
+			'SECURE_AUTH_SALT',
+			'LOGGED_IN_SALT',
+			'NONCE_SALT',
+		];
+		$salts_array = [];
+		foreach ($salts_keys as $key) {
+			try {
+				$value = defined($key) ? constant($key) : '';
+				$salts_array[$key] = $value;
+			} catch (Error | Exception $e) {
+				$salts_array[$key] = '';
+			}
+		}
+		return $salts_array;
+	}
 }

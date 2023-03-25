@@ -1,4 +1,7 @@
 <?php
+
+use SaltShaker\SalterOptions;
+
 $salterOptionsObject = SalterOptions::getInstance();
 
 $config_file_checker = new SalterCore();
@@ -15,23 +18,48 @@ if (!$is_config) {
 ?>
 	<div class="salt_shaker_inner_settings">
 		<div>
+			<?php
+			$salts = $config_file_checker->getSaltsArray();
+			if (!empty($salts)) {
+			?>
+				<p><?php echo __('WordPress salt keys or security keys are codes that help protect important information on your website. They make it harder for hackers to access your website by making passwords more complex. You don\'t need to remember these codes, Salt Shaker plugin takes care of generating the codes directly from WordPress API.', 'salt-shaker-pro'); ?></p>
+				<table class="salt-table">
+					<thead>
+						<tr>
+							<th><?php esc_html_e('Name', 'salt-shaker-pro'); ?></th>
+							<th><?php esc_html_e('Value', 'salt-shaker-pro'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($salts as $constant_name => $value) { ?>
+							<tr>
+								<td><?php echo esc_html($constant_name); ?></td>
+								<td><?php echo esc_html($value); ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+				<br />
+			<?php } ?>
 			<div>
 				<p style="color:red; font-weight: bold"><?php esc_html_e('Changing WordPress salt keys will force all logged-in users to login again.', 'salt-shaker') ?></p>
 				<h3><?php esc_html_e('Scheduled Change:', 'salt-shaker') ?></h3>
 				<?php if ($salterOptionsObject->getOption("salt_shaker_autoupdate_enabled") == "true") {
 					$format = 'l, ' . get_option('date_format') . ' ' . get_option('time_format');
-					$next_schedule = date_i18n($format, wp_next_scheduled('salt_shaker_change_salts_scheduled'));
+					$next_schedule = date_i18n($format, wp_next_scheduled('salt_shaker_change_salts'));
 				?>
 					<p style="color:green; font-weight: bold">
-						<?php printf(__('WordPress salt keys will be automatically changed on %s', 'salt-shaker'), $next_schedule); ?>
+						<?php printf(__('The salt keys will be automatically changed on %s', 'salt-shaker-pro'), $next_schedule); ?>
 					</p>
 				<?php
 				}
 				?>
-				<p> <?php esc_html_e('Set scheduled job for automated WordPress salt keys changing:', 'salt-shaker') ?></p>
+				<p> <?php esc_html_e('Choose when WordPress salt keys should be changed automatically:', 'salt-shake-pro') ?></p>
+				<!-- Enable schedules input -->
 				<input type="checkbox" id="schedualed_salt_changer" <?php echo ($salterOptionsObject->getOption("salt_shaker_autoupdate_enabled") == "true" ? "checked" : ""); ?> />
-				<label><?php esc_html_e('Change WordPress salt keys on', 'salt-shaker') ?></label>
+				<label for="schedualed_salt_changer"><?php esc_html_e('Change WordPress salt keys', 'salt-shaker') ?></label>
 				<?php wp_nonce_field('salt-shaker_save-salt-schd', '_ssnonce_scheduled'); ?>
+				<!-- Schedule interval -->
 				<select id="schedualed_salt_value">
 					<option value="daily" <?php echo ($salterOptionsObject->getOption("salt_shaker_update_interval") == "daily" ? "selected" : ""); ?>><?php esc_html_e('Daily', 'salt-shaker') ?></option>
 					<option value="weekly" <?php echo ($salterOptionsObject->getOption("salt_shaker_update_interval") == "weekly" ? "selected" : ""); ?>><?php esc_html_e('Weekly', 'salt-shaker') ?></option>
@@ -39,8 +67,54 @@ if (!$is_config) {
 					<option value="quarterly" <?php echo ($salterOptionsObject->getOption("salt_shaker_update_interval") == "quarterly" ? "selected" : ""); ?>><?php esc_html_e('Quarterly', 'salt-shaker') ?></option>
 					<option value="biannually" <?php echo ($salterOptionsObject->getOption("salt_shaker_update_interval") == "biannually" ? "selected" : ""); ?>><?php esc_html_e('Biannually', 'salt-shaker') ?></option>
 				</select>
-				<?php esc_html_e('Basis.', 'salt-shaker') ?>
+
+
+				<!-- Week days -->
+				<select disabled class="opacity_6">
+					<option value="sunday"><?php esc_html_e('Sunday', 'salt-shaker-pro') ?></option>
+				</select>
+
+				<label class="opacity_6"><?php esc_html_e('At', 'salt-shaker-pro') ?></label>
+				<input type="time" disabled class="opacity_6" value="00:00">
 			</div>
+			<!-- End Schedule settings -->
+
+			<!-- Notifications Settings -->
+
+			<div>
+				<div class="opacity_6">
+					<h3><?php esc_html_e('Notifications Settings', 'salt-shaker-pro') ?></h3>
+					<!-- Enable manual notifications -->
+					<p>
+						<input type="checkbox" disabled />
+						<label for="salt_shaker_manual_update_reminder_enabled">
+							<?php esc_html_e('Remind me to update the keys manually.', 'salt-shaker-pro') ?>
+							<span class="tooltip-icon"><span class="dashicons dashicons-editor-help"></span><span class="tooltip-text"><?php esc_html_e('Check this box if you want to receive reminders to update your keys manually.', 'salt-shaker-pro') ?></span></span>
+						</label>
+					</p>
+					<!-- End Enable manual notifications -->
+
+					<!-- Enable scheduled notifications -->
+					<p id="salt_shaker_scheduled_update_reminder_enabled_wrap">
+						<input type="checkbox" disabled />
+						<label id="salt_shaker_scheduled_update_reminder_text" for="salt_shaker_scheduled_update_reminder_enabled"><?php esc_html_e('Notify me when an automatic update takes place.', 'salt-shaker-pro') ?>
+							<span class="tooltip-icon"><span class="dashicons dashicons-editor-help"></span><span class="tooltip-text"><?php esc_html_e('To enable automatic notifications, enable the Scheduled Change option.', 'salt-shaker-pro') ?></span></span>
+						</label>
+					</p>
+
+					<!-- End Enable scheduled notifications -->
+
+				</div>
+
+				<!-- End Notfications emails -->
+				<input type="button" id="save-salt-shaker-settings" name="change_salts_now" class="button button-primary" value="<?php esc_attr_e('Save Settings', 'salt-shaker-pro') ?>" />
+			</div>
+
+			<hr class="settings-separator">
+
+			<!-- End Notifications Settings -->
+
+
 			<div>
 				<h3><?php esc_html_e('Immediate Change:', 'salt-shaker') ?></h3>
 				<p class="keys_updated_message" style="display: none; color:green; font-weight: bold">
