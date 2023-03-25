@@ -1,4 +1,5 @@
 <?php
+
 /**
 Plugin Name: Salt Shaker
 Plugin URI: https://nagdy.net/
@@ -26,26 +27,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 Copyright 2023 Nagdy.net.
  */
-	
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
+
+if (!defined('ABSPATH')) {
+	exit;
+}
+
+/**
+ * Let's make sure that Salt Shaker PRO is not active.
+ *
+ * @since 1.3.3
+ */
+
+
+function salt_shaker_pro_deactivate()
+{
+	if (is_plugin_active('salt-shaker-pro/shaker.php')) {
+		deactivate_plugins('salt-shaker-pro/shaker.php');
 	}
-	
-	/**
-	 * Let's make sure that Salt Shaker PRO is not active.
-	 *
-	 * @since 1.3.3
-	 */
-	
-	function salt_shaker_pro_deactivate(){
-		if ( is_plugin_active( 'salt-shaker-pro/shaker.php' ) ) {
-			deactivate_plugins( 'salt-shaker-pro/shaker.php' );
-		}
-	}
-	register_activation_hook( __FILE__, 'salt_shaker_pro_deactivate' );
-	
-include_once (plugin_dir_path(__FILE__) . "_inc/freemius.php");
+}
+register_activation_hook(__FILE__, 'salt_shaker_pro_deactivate');
+
+include_once(plugin_dir_path(__FILE__) . "_inc/freemius.php");
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
+require_once(plugin_dir_path(__FILE__) . "_inc/SalterOptions.php");
+
 
 /**
  * Load plugin textdomain.
@@ -55,35 +60,66 @@ include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
  * Hook in on the init action as it is recommended than using the plugins_loaded action.
  */
 
-function salt_shaker_load_plugin_textdomain() {
-    load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+function salt_shaker_load_plugin_textdomain()
+{
+	load_plugin_textdomain('salt-shaker', FALSE, basename(dirname(__FILE__)) . '/languages/');
 }
-add_action( 'init', 'salt_shaker_load_plugin_textdomain' );
-	
-	/**
-	 * Add a link to the settings page on the plugins.php page.
-	 *
-	 * @param $actions
-	 * @param $plugin_file
-	 *
-	 * @return array         List of modified plugin action links.
-	 * @since 1.2.7
-	 *
-	 */
+add_action('init', 'salt_shaker_load_plugin_textdomain');
 
-	function salt_shaker_settings_link( $actions, $plugin_file ) {
-		static $plugin;
-		
-		if ( ! isset( $plugin ) ) {
-			$plugin = plugin_basename( __FILE__ );
-		}
-		if ( $plugin == $plugin_file ) {
-			$settings  = array( 'settings' => '<a href="' . esc_url( admin_url( '/tools.php?page=salt_shaker' ) ) . '">' . __( 'Settings', 'salt-shaker' ) . '</a>' );
-			$actions = array_merge( $settings, $actions );
-		}
-		
-		return $actions;
+/**
+ * Add a link to the settings page on the plugins.php page.
+ *
+ * @param $actions
+ * @param $plugin_file
+ *
+ * @return array         List of modified plugin action links.
+ * @since 1.2.7
+ *
+ */
+
+function salt_shaker_settings_link($actions, $plugin_file)
+{
+	static $plugin;
+
+	if (!isset($plugin)) {
+		$plugin = plugin_basename(__FILE__);
 	}
-	add_filter( 'plugin_action_links', 'salt_shaker_settings_link', 10, 5 );
-	
-	$salt_shaker = new Salter();
+	if ($plugin == $plugin_file) {
+		$settings  = array('settings' => '<a href="' . esc_url(admin_url('/tools.php?page=salt_shaker')) . '">' . __('Settings', 'salt-shaker') . '</a>');
+		$actions = array_merge($settings, $actions);
+	}
+
+	return $actions;
+}
+add_filter('plugin_action_links', 'salt_shaker_settings_link', 10, 5);
+
+
+/**
+ * Action when Salt Shaker update
+ * 
+ */
+add_action('upgrader_process_complete', 'shaker_upgrade', 10, 2);
+
+function shaker_upgrade($upgrader_object, $options)
+{
+	$salterOptionsObject = SalterOptions::getInstance();
+	$current_plugin_path_name = plugin_basename(__FILE__);
+	if ($options['action'] == 'update' && $options['type'] == 'plugin') {
+		foreach ($options['plugins'] as $each_plugin) {
+			if ($each_plugin == $current_plugin_path_name) {
+				// Check if the shaker options array exist, if not, create the array, and save it.
+				if (count($salterOptionsObject->getSalterOptions()) == 0) {
+					$interval
+						= get_option('salt_shaker_update_interval');
+					if ($interval) {
+						$salterOptionsObject->setOption('salt_shaker_update_interval', $interval);
+					}
+					$salterOptionsObject->setOption('salt_shaker_autoupdate_enabled', get_option('salt_shaker_autoupdate_enabled', false));
+				}
+			}
+		}
+	}
+}
+
+
+$salt_shaker = new Salter();
