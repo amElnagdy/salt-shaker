@@ -14,21 +14,21 @@
 		<div class="salt_shaker_inner_settings">
 			<div>
 				<div>
-					<p style="color:red; font-weight: bold"><?php esc_html_e( 'Changing WP Keys and Salts will force all logged-in users to login again.', 'salt-shaker' ) ?></p>
+					<p style="color:red; font-weight: bold"><?php esc_html_e( 'Changing WordPress salt keys will force all logged-in users to login again.', 'salt-shaker' ) ?></p>
 					<h3><?php esc_html_e( 'Scheduled Change:', 'salt-shaker' ) ?></h3>
 					<?php if ( get_option( "salt_shaker_autoupdate_enabled" ) == "true" ) {
 						$next_schedule = date_i18n( get_option( 'date_format' ), wp_next_scheduled( 'salt_shaker_change_salts' ) );
 						?>
 						<p style="color:green; font-weight: bold">
-							<?php printf( __( 'The salt keys will be automatically changed on %s', 'salt-shaker' ), $next_schedule ); ?>
+							<?php printf( __( 'WordPress salt keys will be automatically changed on %s', 'salt-shaker' ), $next_schedule ); ?>
 						</p>
 						<?php
 					}
 					?>
-					<p> <?php esc_html_e( 'Set scheduled job for automated Salt changing:', 'salt-shaker' ) ?></p>
+					<p> <?php esc_html_e( 'Set scheduled job for automated WordPress salt keys changing:', 'salt-shaker' ) ?></p>
 					<input type="checkbox"
 					       id="schedualed_salt_changer" <?php echo( get_option( "salt_shaker_autoupdate_enabled" ) == "true" ? "checked" : "" ); ?> />
-					<label><?php esc_html_e( 'Change WP Keys and Salts on', 'salt-shaker' ) ?></label>
+					<label><?php esc_html_e( 'Change WordPress salt keys on', 'salt-shaker' ) ?></label>
 					<?php wp_nonce_field( 'salt-shaker_save-salt-schd', '_ssnonce_scheduled' ); ?>
 					<select id="schedualed_salt_value">
 						<option value="daily" <?php echo( get_option( "salt_shaker_update_interval" ) == "daily" ? "selected" : "" ); ?>><?php esc_html_e( 'Daily', 'salt-shaker' ) ?></option>
@@ -42,9 +42,9 @@
 				<div>
 					<h3><?php esc_html_e( 'Immediate Change:', 'salt-shaker' ) ?></h3>
 					<p class="keys_updated_message" style="display: none; color:green; font-weight: bold">
-						<?php esc_html_e( "Keys have been updated, you'll be redirected to the login page in a few seconds.", 'salt-shaker' ) ?>
+						<?php esc_html_e( "Salt keys have been updated, you'll be redirected to the login page in a few seconds.", 'salt-shaker' ) ?>
 					</p>
-					<p><?php esc_html_e( 'When you click the following button, WP keys and salts will change immediately. And you will need to login again.', 'salt-shaker' ) ?></p>
+					<p><?php esc_html_e( 'When you click the following button, WordPress salt keys will change immediately. And you will need to login again.', 'salt-shaker' ) ?></p>
 
 					<input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary"
 					       value="<?php esc_attr_e( 'Change Now', 'salt-shaker' ) ?>"/>

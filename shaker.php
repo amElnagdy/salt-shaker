@@ -3,7 +3,7 @@
 Plugin Name: Salt Shaker
 Plugin URI: https://nagdy.net/
 Description: A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security.
-Version: 1.3.2
+Version: 1.3.3
 Author: Nagdy
 Author URI: https://nagdy.net/
 License: GPLv2 or later
@@ -24,16 +24,41 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Copyright 2022 Nagdy.net.
+Copyright 2023 Nagdy.net.
  */
-
+	
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
+	
+	/**
+	 * Let's make sure that Salt Shaker PRO is not active.
+	 *
+	 * @since 1.3.3
+	 */
+	
+	function salt_shaker_pro_deactivate(){
+		if ( is_plugin_active( 'salt-shaker-pro/shaker.php' ) ) {
+			deactivate_plugins( 'salt-shaker-pro/shaker.php' );
+		}
+	}
+	register_activation_hook( __FILE__, 'salt_shaker_pro_deactivate' );
+	
+include_once (plugin_dir_path(__FILE__) . "_inc/freemius.php");
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
-$salt_shaker = new Salter();
+
+/**
+ * Load plugin textdomain.
+ *
+ * @since 1.0.0
+ *
+ * Hook in on the init action as it is recommended than using the plugins_loaded action.
+ */
 
 function salt_shaker_load_plugin_textdomain() {
     load_plugin_textdomain( 'salt-shaker', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'plugins_loaded', 'salt_shaker_load_plugin_textdomain' );
+add_action( 'init', 'salt_shaker_load_plugin_textdomain' );
 	
 	/**
 	 * Add a link to the settings page on the plugins.php page.
@@ -53,15 +78,12 @@ add_action( 'plugins_loaded', 'salt_shaker_load_plugin_textdomain' );
 			$plugin = plugin_basename( __FILE__ );
 		}
 		if ( $plugin == $plugin_file ) {
-			
 			$settings  = array( 'settings' => '<a href="' . esc_url( admin_url( '/tools.php?page=salt_shaker' ) ) . '">' . __( 'Settings', 'salt-shaker' ) . '</a>' );
-			$site_link = array( 'support' => '<a href="' . esc_url( 'https://www.buymeacoffee.com/nagdy' ) . '" style="color:#0eb804;">' . __( 'Buy Me a Coffee!', 'salt-shaker' ) . '</a>' );
-			
 			$actions = array_merge( $settings, $actions );
-			$actions = array_merge( $site_link, $actions );
-			
 		}
 		
 		return $actions;
 	}
 	add_filter( 'plugin_action_links', 'salt_shaker_settings_link', 10, 5 );
+	
+	$salt_shaker = new Salter();
