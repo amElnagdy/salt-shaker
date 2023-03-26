@@ -24,7 +24,7 @@
 			echo $link;
 		?>
 	</div>
-	<section style="background-color: #f8f8f8; border: 1px solid #ccc; padding: 20px; border-radius: 5px; margin: 50px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+	<section id="pro" style="background-color: #f8f8f8; border: 1px solid #ccc; padding: 20px; border-radius: 5px; margin: 50px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 		<h2 style="text-align: center; font-size: 24px; color: #333; text-shadow: 1px 1px #fff;"><?php esc_html_e( 'Looking for PRO Features?', 'salt-shaker' ); ?></h2>
 		<ul style="list-style-type: circle; margin: 10px; padding: 10px; font-size: 16px;">
 			<li style="margin-bottom: 10px;"><?php esc_html_e( 'Premium email support 24x7!', 'salt-shaker' ); ?></li>
@@ -35,7 +35,7 @@
 		</ul>
 		<div style="text-align: center; margin-top: 20px;">
 			<a href="<?php echo esc_url( ss_fs()->get_upgrade_url() ); ?>" style="display: inline-block; padding: 10px 20px; background-color: #333; color: #fff; border-radius: 5px; text-decoration: none; font-size: 18px; text-shadow: 1px 1px #000;"><?php esc_html_e( 'Upgrade to PRO', 'salt-shaker' ); ?></a>
-			<p style="margin-top: 10px; font-size: 16px; color: #333;">Get 50% off Salt Shaker Pro's annual plan with coupon code SALTSHAKERPRO</p>
+			<p style="margin-top: 10px; font-size: 16px; color: #333;">Get 50% off Salt Shaker PRO with coupon code "SALTSHAKERPRO"! HURRY UP! ONLY FOR THE FIRST 99 USERS!</p>
 
 		</div>
 	</section>

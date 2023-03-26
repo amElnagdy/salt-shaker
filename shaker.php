@@ -28,7 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 Copyright 2023 Nagdy.net.
  */
 
-use SaltShaker\SalterOptions;
 
 if (!defined('ABSPATH')) {
 	exit;
@@ -49,11 +48,9 @@ function salt_shaker_pro_deactivate()
 }
 register_activation_hook(__FILE__, 'salt_shaker_pro_deactivate');
 
-register_activation_hook(__FILE__, 'shakerSettingsMigrate');
 
 include_once(plugin_dir_path(__FILE__) . "_inc/freemius.php");
 include_once(plugin_dir_path(__FILE__) . "_inc/loader.php");
-require_once(plugin_dir_path(__FILE__) . "_inc/SalterOptions.php");
 
 
 /**
@@ -98,25 +95,7 @@ function salt_shaker_settings_link($actions, $plugin_file)
 add_filter('plugin_action_links', 'salt_shaker_settings_link', 10, 5);
 
 
-/**
- * Action when Salt Shaker update
- * the upgrader_process_complete action throws an error (Update fails)
- */
-// add_action('upgrader_process_complete', 'shaker_upgrade', 10, 2);
 
-function shakerSettingsMigrate()
-{
-	$salterOptionsObject = SalterOptions::getInstance();
-
-	if (count($salterOptionsObject->getSalterOptions()) == 0) {
-		$interval
-			= get_option('salt_shaker_update_interval');
-		if ($interval) {
-			$salterOptionsObject->setOption('salt_shaker_update_interval', $interval);
-		}
-		$salterOptionsObject->setOption('salt_shaker_autoupdate_enabled', get_option('salt_shaker_autoupdate_enabled', false));
-	}
-}
 
 use SaltShaker\Salter;
 
