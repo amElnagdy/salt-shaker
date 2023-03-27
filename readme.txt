@@ -3,8 +3,8 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://www.buymeacoffee.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 4.0
-Tested up to: 6.1
-Stable tag: 1.3.2
+Tested up to: 6.2
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,11 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 1. Plugin Settings.
 
 == Changelog ==
+
+= 1.4.0 =
+* WordPress 6.2 compatibility.
+* Support for wp-salt files.
+* Introducing Salt Shaker PRO.
 
 = 1.3.2 =
 * WordPress 6.1 compatibility.

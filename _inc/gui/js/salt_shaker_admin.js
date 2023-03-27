@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
-  jQuery(document).on(
-    "change",
+  jQuery("#save-salt-shaker-settings").on(
+    "click",
     ["#schedualed_salt_changer", "#schedualed_salt_value"],
     function (e) {
       jQuery("#saving_spinner").css("visibility", "visible");
@@ -18,6 +18,7 @@ jQuery(document).ready(function () {
           // console.log(response);
           setTimeout(function () {
             jQuery("#change_salts_now").prop("disabled", "");
+            location.reload();
           }, 3000);
         }
       );
