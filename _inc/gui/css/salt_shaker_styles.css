@@ -13,10 +13,6 @@
     margin-top: 20px;
 }
 
-#salt_shaker_scheduled_update_reminder_enabled_wrap {
-    /*margin-left: 10px;*/
-}
-
 .settings-separator {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -41,13 +37,11 @@
     bottom: 100%;
     left: 50%;
     margin-left: -75px;
-    opacity: 0;
     transition: opacity 0.3s;
 }
 
 .tooltip-icon:hover .tooltip-text {
     visibility: visible;
-    opacity: 1;
 }
 
 .dashicons {
@@ -82,4 +76,7 @@
 
 .salt-table td.value {
     font-family: monospace;
+}
+.salt-pro{
+    color: goldenrod;
 }

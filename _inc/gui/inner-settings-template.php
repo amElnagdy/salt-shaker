@@ -25,8 +25,6 @@ if (!$is_config) {
 				<p><?php echo __('WordPress salt keys or security keys are codes that help protect important information on your website. They make it harder for hackers to access your website by making passwords more complex. You don\'t need to remember these codes, Salt Shaker plugin takes care of generating the codes directly from WordPress API.', 'salt-shaker'); ?></p>
 				<h2><?php echo __('Current Salt Keys:', 'salt-shaker'); ?></h2>
 				<p><?php echo __('The following table shows the current set of the salt keys in the configuration file.', 'salt-shaker'); ?></p>
-
-
 				<table class="salt-table">
 					<thead>
 						<tr>
@@ -80,7 +78,9 @@ if (!$is_config) {
 
 
 				<!-- Week days -->
-				<select disabled class="opacity_6" title="<?php esc_attr_e('This field is disabled', 'salt-shaker') ?>">
+				<br><br>
+				<label class="salt-pro"><?php esc_html_e('PRO Feature:', 'salt-shaker') ?></label>
+				<select disabled class="opacity_6" title="<?php esc_attr_e('Upgrade to Salt Shaker PRO', 'salt-shaker') ?>">
 					<option value="sunday"><?php esc_html_e('Sunday', 'salt-shaker') ?></option>
 				</select>
 
@@ -94,20 +94,24 @@ if (!$is_config) {
 			<!-- Notifications Settings -->
 
 			<div>
-				<div class="opacity_6">
+				<div >
+
 					<!-- Enable manual notifications -->
 					<p>
+						<label class="salt-pro"><?php esc_html_e('PRO Feature:', 'salt-shaker') ?></label>
+
 						<input type="checkbox" disabled />
 						<label for="salt_shaker_manual_update_reminder_enabled">
 							<?php esc_html_e('Remind me to update the keys manually.', 'salt-shaker') ?>
 							<span class="tooltip-icon"><span class="dashicons dashicons-editor-help"></span><span class="tooltip-text"><?php printf('<a href="%s">%s</a>', esc_url('#pro'), esc_html__('PRO feature. Learn more.', 'salt-shaker')) ?></span></span>
-
 						</label>
 					</p>
 					<!-- End Enable manual notifications -->
 
 					<!-- Enable scheduled notifications -->
 					<p id="salt_shaker_scheduled_update_reminder_enabled_wrap">
+						<label class="salt-pro"><?php esc_html_e('PRO Feature:', 'salt-shaker') ?></label>
+
 						<input type="checkbox" disabled />
 						<label id="salt_shaker_scheduled_update_reminder_text" for="salt_shaker_scheduled_update_reminder_enabled"><?php esc_html_e('Notify me when an automatic update takes place.', 'salt-shaker') ?>
 							<span class="tooltip-icon"><span class="dashicons dashicons-editor-help"></span><span class="tooltip-text"><?php printf('<a href="%s">%s</a>', esc_url('#pro'), esc_html__('PRO feature. Learn more.', 'salt-shaker')) ?></span></span>
@@ -133,7 +137,7 @@ if (!$is_config) {
 				<p class="keys_updated_message" style="display: none; color:green; font-weight: bold">
 					<?php esc_html_e("Salt keys have been updated, you'll be redirected to the login page in a few seconds.", 'salt-shaker') ?>
 				</p>
-				<p><?php esc_html_e('When you click the following button, WordPress salt keys will change immediately. And you will need to login again.', 'salt-shaker') ?></p>
+				<p><?php esc_html_e('When you click the following button, WordPress salt keys will change immediately. And all users will need to login again.', 'salt-shaker') ?></p>
 
 				<input type="button" id="change_salts_now" name="change_salts_now" class="button button-primary" value="<?php esc_attr_e('Change Now', 'salt-shaker') ?>" />
 				<?php wp_nonce_field('salt-shaker_change-salts-now', '_ssnonce_now'); ?>
