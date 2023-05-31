@@ -38,8 +38,8 @@ class SalterCore
 	{
 
 		// Check if the file name is wp-salt.php used in some hosting providers
-		$wp_salts_file   = 'wp-salt';
-		$salts_file_name = (file_exists(ABSPATH . $wp_salts_file . '.php')) ? $wp_salts_file : apply_filters('salt_shaker_salts_file', 'wp-config');
+		$wp_salts_file   = ABSPATH . 'wp-salt';
+		$salts_file_name = (file_exists($wp_salts_file)) ? $wp_salts_file : apply_filters('salt_shaker_salts_file', 'wp-config');
 		$config_file     = ABSPATH . $salts_file_name . '.php';
 		$config_file_up  = ABSPATH . '../' . $salts_file_name . '.php';
 
