@@ -122,19 +122,19 @@ class Salter extends SalterCore
 	{
 		$schedules['weekly']     = array(
 			'interval' => 604800,
-			'display'  => __('Weekly')
+			'display'  => __('Weekly', 'salt-shaker')
 		);
 		$schedules['monthly']    = array(
 			'interval' => 2635200,
-			'display'  => __('Monthly')
+			'display'  => __('Monthly', 'salt-shaker')
 		);
 		$schedules['quarterly']  = array(
 			'interval' => 3 * 2635200,
-			'display'  => __('Every 3 Months')
+			'display'  => __('Every 3 Months', 'salt-shaker')
 		);
 		$schedules['biannually'] = array(
 			'interval' => 6 * 2635200,
-			'display'  => __('Every 6 Months')
+			'display'  => __('Every 6 Months', 'salt-shaker')
 		);
 
 		return $schedules;
