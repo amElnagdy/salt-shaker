@@ -1,79 +1,238 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2023 Nagdy
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-17 20:03+0200\n"
-"PO-Revision-Date: 2016-10-17 20:04+0200\n"
+"Project-Id-Version: Salt Shaker 1.4.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/salt-shaker\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Eazy Po 0.9.5.3\n"
+"POT-Creation-Date: 2023-06-27T00:27:27+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.0\n"
+"X-Domain: salt-shaker\n"
 
-#: _inc/salter.class.php:16 _inc/gui/settings-template.php:2
-msgid "Salt Shaker Settings"
-msgstr ""
-
-#: _inc/salter.class.php:16
+#. Plugin Name of the plugin
+#: _inc/salter.class.php:31
 msgid "Salt Shaker"
 msgstr ""
 
-#: _inc/salter.class.php:20
-msgid "Salt Changing Behaviour"
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://nagdy.net/"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:4
-msgid ""
-"Changing WP Keys and Salts will force all logged-in users to login again."
+#. Description of the plugin
+msgid "A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security."
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:5
+#. Author of the plugin
+msgid "Nagdy"
+msgstr ""
+
+#: shaker.php:89
+msgid "Settings"
+msgstr ""
+
+#: _inc/freemius.php:51
+msgid "Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %5$s. If you skip this, that's okay! %2$s will still work just fine."
+msgstr ""
+
+#. translators: 1: wp-config.php 2: https://codex.wordpress.org/Changing_File_Permissions
+#: _inc/gui/inner-settings-template.php:13
+msgid "The file <code>%1$s</code> which contains your salt keys is not writable. First, make sure it exists then read how to setup the correct permissions on <a href=\"%2$s\">WordPress codex</a>."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:25
+msgid "WordPress salt keys or security keys are codes that help protect important information on your website. They make it harder for hackers to access your website by making passwords more complex. You don't need to remember these codes, Salt Shaker plugin takes care of generating the codes directly from WordPress API."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:26
+msgid "Current Salt Keys:"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:27
+msgid "The following table shows the current set of the salt keys in the configuration file."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:31
+msgid "Name"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:32
+msgid "Value"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:40
+msgid "Does not exist"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:53
+msgid "Changing WordPress salt keys will force all logged-in users to login again."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:54
 msgid "Scheduled Change:"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:6
-msgid "Set scheduled job for automated Salt changing:"
+#: _inc/gui/inner-settings-template.php:60
+msgid "The salt keys will be automatically changed on %s"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:7
-msgid "Change WP Keys and Salts on"
+#: _inc/gui/inner-settings-template.php:68
+msgid "Change WordPress salt keys"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:9
+#: _inc/gui/inner-settings-template.php:72
 msgid "Daily"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:10
+#: _inc/gui/inner-settings-template.php:73
+#: _inc/salter.class.php:125
 msgid "Weekly"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:11
+#: _inc/gui/inner-settings-template.php:74
+#: _inc/salter.class.php:129
 msgid "Monthly"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:13
-msgid "Basis."
+#: _inc/gui/inner-settings-template.php:75
+msgid "Quarterly"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:16
+#: _inc/gui/inner-settings-template.php:76
+msgid "Biannually"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:82
+#: _inc/gui/inner-settings-template.php:101
+#: _inc/gui/inner-settings-template.php:113
+msgid "PRO Feature:"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:83
+msgid "Upgrade to Salt Shaker PRO"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:84
+msgid "Sunday"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:87
+msgid "At"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:89
+msgid "With Salt Shaker PRO, you can select the exact times when the keys should be changed"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:105
+msgid "Remind me to update the keys manually."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:106
+#: _inc/gui/inner-settings-template.php:117
+msgid "PRO feature. Learn more."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:116
+msgid "Notify me when an automatic update takes place."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:127
+msgid "Save Settings"
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:136
 msgid "Immediate Change:"
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:17
-msgid ""
-"When you click the following button, WP keys and salts will change "
-"immediately."
+#: _inc/gui/inner-settings-template.php:138
+msgid "Salt keys have been updated, you'll be redirected to the login page in a few seconds."
 msgstr ""
 
-#: _inc/gui/inner-settings-template.php:19
+#: _inc/gui/inner-settings-template.php:140
+msgid "When you click the following button, WordPress salt keys will change immediately. And all users will need to login again."
+msgstr ""
+
+#: _inc/gui/inner-settings-template.php:142
 msgid "Change Now"
+msgstr ""
+
+#: _inc/gui/settings-template.php:2
+#: _inc/salter.class.php:31
+msgid "Salt Shaker Settings"
+msgstr ""
+
+#: _inc/gui/settings-template.php:16
+msgid "Do you find this plugin useful? Please <a href=\"%s\">Rate it</a> on WordPress.org. BIG Thanks in advance!"
+msgstr ""
+
+#: _inc/gui/settings-template.php:28
+msgid "Looking for PRO Features?"
+msgstr ""
+
+#: _inc/gui/settings-template.php:30
+#: _inc/SalterOptions.php:65
+msgid "Premium email support 24x7!"
+msgstr ""
+
+#: _inc/gui/settings-template.php:31
+#: _inc/SalterOptions.php:66
+msgid "Set exactly what time to change the salt keys: You can choose the time when your users are sleeping!."
+msgstr ""
+
+#: _inc/gui/settings-template.php:32
+msgid "Get notified when the keys are changed: Receive an email notification when the salt keys are updated."
+msgstr ""
+
+#: _inc/gui/settings-template.php:33
+msgid "Set a custom email for receiving the notifications: Choose the email address where you want to receive the notification emails."
+msgstr ""
+
+#: _inc/gui/settings-template.php:34
+#: _inc/SalterOptions.php:69
+msgid "Salt Shaker can remind you to update the salt keys manually if it has been too long."
+msgstr ""
+
+#: _inc/gui/settings-template.php:37
+msgid "Upgrade to PRO"
+msgstr ""
+
+#: _inc/salter.class.php:39
+msgid "Salt Changing Behaviour"
+msgstr ""
+
+#: _inc/salter.class.php:133
+msgid "Every 3 Months"
+msgstr ""
+
+#: _inc/salter.class.php:137
+msgid "Every 6 Months"
+msgstr ""
+
+#: _inc/salter.class.php:160
+msgid "Salt Shaker is not working due to a configuration error. Please visit <a href=\"%s\">the settings page</a> to resolve this error."
+msgstr ""
+
+#. translators: 1: URL of the upgrade page
+#: _inc/SalterOptions.php:58
+msgid ""
+"From Salt Shaker: Use the discount SALTSHAKERPRO code and be among the first 99 to upgrade on our %1$spricing page%2$s and get 50%% off! \n"
+"\t\t\tHere is what you get with the PRO version:"
+msgstr ""
+
+#: _inc/SalterOptions.php:67
+msgid "Get notified when the keys are changed."
+msgstr ""
+
+#: _inc/SalterOptions.php:68
+msgid "Set a custom email for receiving the notifications."
+msgstr ""
+
+#: _inc/SalterOptions.php:79
+msgid "Never show this again."
 msgstr ""

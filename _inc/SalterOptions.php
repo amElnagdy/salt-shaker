@@ -87,7 +87,7 @@ class SalterOptions
 		// Update the option to dismiss the notice
 		$this->setOption($this->notice_option_name, '1');
 		// redirect back to dashboard
-		wp_redirect(admin_url());
+		wp_safe_redirect( wp_get_referer() );
 		exit;
 	}
 
