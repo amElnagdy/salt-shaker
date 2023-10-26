@@ -3,8 +3,8 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://www.buymeacoffee.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
 Requires at least: 4.0
-Tested up to: 6.2
-Stable tag: 1.4.2
+Tested up to: 6.4
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,7 +79,11 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 == Screenshots ==
 1. Plugin Settings.
 
+
 == Changelog ==
+= 1.4.3 =
+* WordPress 6.4 compatibility.
+
 = 1.4.2 =
 * Minor bug fixes.
 * Updated Freemius SDK.
