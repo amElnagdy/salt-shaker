@@ -1,10 +1,10 @@
 === Salt Shaker ===
 Contributors: nagdy, ahmedgeek
 Donate link: https://www.buymeacoffee.com/nagdy
-Tags: security, salts, salt keys, security keys, authentication keys, login, cookies, wp config
+Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 4.0
-Tested up to: 6.4
-Stable tag: 1.4.3
+Tested up to: 6.5
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 
 == Changelog ==
+
+= 1.4.4 =
+* WordPress 6.5 compatibility.
+
 = 1.4.3 =
 * WordPress 6.4 compatibility.
 
