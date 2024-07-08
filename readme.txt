@@ -82,6 +82,10 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 == Changelog ==
 
+= 1.4.5 =
+* WordPress 6.6 compatibility.
+* Show admin notices only on the plugin page.
+
 = 1.4.4 =
 * WordPress 6.5 compatibility.
 
