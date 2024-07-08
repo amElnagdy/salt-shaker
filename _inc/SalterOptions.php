@@ -45,11 +45,7 @@ class SalterOptions
 	public function display_admin_notice()
 	{
 
-		if (!current_user_can('manage_options')) {
-			return;
-		}
-		// check if the notice has been dismissed
-		if($this->getOption($this->notice_option_name)) {
+		if (!current_user_can('manage_options') || strpos($_SERVER['REQUEST_URI'], 'salt_shaker') === false || $this->getOption($this->notice_option_name)) {
 			return;
 		}
 

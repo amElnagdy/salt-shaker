@@ -3,8 +3,8 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://www.buymeacoffee.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 4.0
-Tested up to: 6.5
-Stable tag: 1.4.4
+Tested up to: 6.6
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
