@@ -20,7 +20,21 @@ class SalterCore
 		);
 
 		$http_salts     = wp_remote_get('https://api.wordpress.org/secret-key/1.1/salt/');
-		$returned_salts  = wp_remote_retrieve_body($http_salts);
+
+		// Check for API failures or invalid responses
+		if (
+			is_wp_error($http_salts) ||
+			wp_remote_retrieve_response_code($http_salts) !== 200 ||
+			empty(wp_remote_retrieve_body($http_salts)) ||
+			strpos(wp_remote_retrieve_body($http_salts), '404 Not Found') !== false ||
+			!$this->isValidSaltFormat(wp_remote_retrieve_body($http_salts))
+		) {
+			// API call failed or invalid format, generate salts locally
+			$returned_salts = $this->generateLocalSalts();
+		} else {
+			$returned_salts = wp_remote_retrieve_body($http_salts);
+		}
+
 		$this->new_salts = explode("\n", $returned_salts);
 
 		// Adding filters for additional salts.
@@ -110,5 +124,31 @@ class SalterCore
 			}
 		}
 		return $salts_array;
+	}
+
+	/**
+	 * Validates that the returned salt string contains the expected format
+	 * @param string $salts The salt string to validate
+	 * @return boolean
+	 */
+	private function isValidSaltFormat($salts)
+	{
+		// Check if the string contains at least one valid salt definition
+		return (bool) preg_match("/define\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\);/", $salts);
+	}
+
+	/**
+	 * Generates cryptographically secure salts locally
+	 * @return string
+	 */
+	private function generateLocalSalts()
+	{
+		$salts = '';
+		foreach ($this->salts_array as $salt) {
+			$salt = trim($salt, "'");
+			$salt = trim($salt, ",");
+			$salts .= "define('" . $salt . "', '" . wp_generate_password(64, true, true) . "');\n";
+		}
+		return $salts;
 	}
 }
