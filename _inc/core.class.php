@@ -26,13 +26,14 @@ class SalterCore
 			is_wp_error($http_salts) ||
 			wp_remote_retrieve_response_code($http_salts) !== 200 ||
 			empty(wp_remote_retrieve_body($http_salts)) ||
-			strpos(wp_remote_retrieve_body($http_salts), '404 Not Found') !== false ||
-			!$this->isValidSaltFormat(wp_remote_retrieve_body($http_salts))
+			strpos(wp_remote_retrieve_body($http_salts), '404 Not Found') !== false
 		) {
 			// API call failed or invalid format, generate salts locally
 			$returned_salts = $this->generateLocalSalts();
 		} else {
-			$returned_salts = wp_remote_retrieve_body($http_salts);
+			$raw_salts = wp_remote_retrieve_body($http_salts);
+			$processed_salts = $this->processSalts($raw_salts);
+			$returned_salts = $processed_salts ? $processed_salts : $this->generateLocalSalts();
 		}
 
 		$this->new_salts = explode("\n", $returned_salts);
@@ -50,7 +51,6 @@ class SalterCore
 	 */
 	public function config_file_path()
 	{
-
 		// Check if the file name is wp-salt.php used in some hosting providers
 		$wp_salts_file   = 'wp-salt';
 		$salts_file_name = (file_exists(ABSPATH . $wp_salts_file . '.php')) ? $wp_salts_file : apply_filters('salt_shaker_salts_file', 'wp-config');
@@ -127,17 +127,6 @@ class SalterCore
 	}
 
 	/**
-	 * Validates that the returned salt string contains the expected format
-	 * @param string $salts The salt string to validate
-	 * @return boolean
-	 */
-	private function isValidSaltFormat($salts)
-	{
-		// Check if the string contains at least one valid salt definition
-		return (bool) preg_match("/define\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\);/", $salts);
-	}
-
-	/**
 	 * Generates cryptographically secure salts locally
 	 * @return string
 	 */
@@ -147,8 +136,32 @@ class SalterCore
 		foreach ($this->salts_array as $salt) {
 			$salt = trim($salt, "'");
 			$salt = trim($salt, ",");
-			$salts .= "define('" . $salt . "', '" . wp_generate_password(64, true, true) . "');\n";
+			$generated_password = wp_generate_password(64, true, true);
+			$salts .= "define('" . $salt . "', '" . $generated_password . "');\n";
 		}
-		return $salts;
+		return $this->processSalts($salts);
+	}
+
+	/**
+	 * Processes the salts string to ensure it's in the correct format
+	 * @param string $salts The salts string to process
+	 * @return string
+	 */
+	private function processSalts($salts)
+	{
+		if (!preg_match("/define\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\);/", $salts)) {
+			return false;
+		}
+
+		$lines = explode("\n", $salts);
+		$processed_lines = array_map(function ($line) {
+			if (empty(trim($line))) {
+				return '';
+			}
+			return preg_replace("/(.*)'(.*?)\\\'/", "$1'$2'", $line);
+		}, $lines);
+
+		$processed_lines = array_filter($processed_lines);
+		return implode("\n", $processed_lines);
 	}
 }
