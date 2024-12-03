@@ -4,7 +4,7 @@ Donate link: https://www.buymeacoffee.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 4.0
 Tested up to: 6.7
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,8 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 
 == Changelog ==
+= 1.4.7 =
+* Fixed: a fatal error when a backslash appears at the end of generated keys.
 
 = 1.4.6 =
 * WordPress 6.7 compatibility.

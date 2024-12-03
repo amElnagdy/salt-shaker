@@ -4,7 +4,7 @@
  * Plugin Name: Salt Shaker
  * Plugin URI: https://nagdy.me/
  * Description: A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security.
- * Version: 1.4.6
+ * Version: 1.4.7
  * Author: Nagdy
  * Author URI: https://nagdy.me/
  * License: GPLv2 or later
