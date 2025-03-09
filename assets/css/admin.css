@@ -1,0 +1,589 @@
+ :root {
+    /* Colors */
+    --ss-primary: #2271b1;
+    --ss-primary-hover: #135e96;
+    --ss-premium: #f0b849;
+    --ss-text: #1d1c1c;
+    --ss-text-secondary: #50575e;
+    --ss-white: #fff;
+    --ss-light-bg: #f8f9fa;
+    --ss-blue-light: #f0f6fc;
+    --ss-border: #ddd;
+    --ss-border-dashed: #ccc;
+    --ss-error: #d63638;
+    
+    /* Spacing */
+    --ss-spacing-xs: 8px;
+    --ss-spacing-sm: 12px;
+    --ss-spacing: 16px;
+    --ss-spacing-md: 20px;
+    --ss-spacing-lg: 24px;
+    --ss-spacing-xl: 30px;
+    --ss-spacing-xxl: 32px;
+}
+
+/* Base Layout */
+.salt-shaker-admin {
+    margin: var(--ss-spacing-md) 0;
+    padding: 20px;
+}
+
+.salt-shaker-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    max-width: 1600px;
+}
+
+.salt-shaker-main {
+    min-width: 0; /* Prevents grid blowout */
+}
+
+.salt-shaker-sidebar {
+    min-width: 0; /* Prevents grid blowout */
+}
+
+@media screen and (max-width: 782px) {
+    .salt-shaker-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.salt-shaker-admin .components-card {
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-admin .components-card-header {
+    background: var(--ss-white);
+}
+
+.salt-shaker-admin .components-card-body {
+    padding: var(--ss-spacing-lg);
+}
+
+.salt-shaker-admin .components-base-control {
+    margin-bottom: var(--ss-spacing-lg);
+}
+
+.salt-shaker-admin .components-spinner {
+    margin: 0;
+}
+
+.salt-shaker-admin .description {
+    color: var(--ss-text);
+    margin-bottom: var(--ss-spacing);
+}
+
+/* Common Elements */
+.salt-shaker-admin .salt-value {
+    font-family: monospace;
+    word-break: break-all;
+}
+
+.salt-shaker-admin .salt-shaker-actions {
+    margin-top: var(--ss-spacing-lg);
+    padding-top: var(--ss-spacing-lg);
+    border-top: 1px solid var(--ss-border);
+}
+
+.salt-shaker-admin .rate-plugin {
+    margin-top: var(--ss-spacing-xl);
+    padding-top: var(--ss-spacing-md);
+    border-top: 1px solid var(--ss-border);
+}
+
+/* Current Salts Section */
+.salt-shaker-current-salts {
+    margin-bottom: var(--ss-spacing-xl);
+}
+
+.salt-shaker-current-salts .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.salt-shaker-current-salts .header h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.salt-shaker-current-salts .content {
+    display: none;
+}
+
+.salt-shaker-current-salts.is-open .content {
+    display: block;
+}
+
+.salt-shaker-current-salts .salt-warning {
+    color: var(--ss-error);
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.salt-shaker-current-salts .toggle-section {
+    display: flex;
+    align-items: center;
+    gap: var(--ss-spacing-xs);
+    color: var(--ss-primary);
+}
+
+.salt-shaker-current-salts .toggle-text {
+    font-size: 13px;
+}
+
+.salt-shaker-current-salts .header:hover .toggle-section {
+    color: var(--ss-primary-hover);
+}
+
+/* Scheduled Change Section */
+.salt-shaker-scheduled-change {
+    margin-bottom: var(--ss-spacing-xl);
+}
+
+.salt-shaker-scheduled-change h3 {
+    margin-bottom: 15px;
+}
+
+.salt-shaker-scheduled-change .settings-container {
+    background: var(--ss-white);
+    border: 1px solid var(--ss-border);
+    padding: var(--ss-spacing-md);
+    border-radius: 4px;
+}
+
+.salt-shaker-scheduled-change .setting-row {
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-scheduled-change .setting-row:last-child {
+    margin-bottom: 0;
+}
+
+.salt-shaker-scheduled-change .interval-setting {
+    position: relative;
+}
+
+/* Premium Features */
+.salt-shaker-scheduled-change .premium-message {
+    background: var(--ss-light-bg);
+    border-left: 4px solid var(--ss-premium);
+    padding: 10px 15px;
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-scheduled-change .premium-message p {
+    margin: 0;
+    font-size: 13px;
+}
+
+.salt-shaker-scheduled-change .premium-message a {
+    font-weight: 600;
+}
+
+.salt-shaker-scheduled-change .premium-feature {
+    background: var(--ss-light-bg);
+    border: 1px dashed var(--ss-border-dashed);
+    padding: 15px;
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-scheduled-change .premium-feature-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-header h4 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-content {
+    opacity: 0.7;
+}
+
+.salt-shaker-scheduled-change .premium-feature-row {
+    margin-bottom: 15px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Premium Badge Handling */
+.premium-badge,
+.premium-text {
+    display: none !important;
+}
+
+.salt-shaker-scheduled-change .premium-feature-item .premium-badge,
+.salt-shaker-scheduled-change .premium-feature-header .premium-badge {
+    display: inline-block !important;
+    margin-left: 10px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-item .premium-text,
+.salt-shaker-scheduled-change .premium-feature-header .premium-text {
+    display: inline-block !important;
+    background: var(--ss-premium);
+    color: #000;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+h1 .premium-badge,
+h2 .premium-badge,
+h3 .premium-badge:not(.premium-feature-header .premium-badge):not(.premium-feature-item .premium-badge) {
+    display: none !important;
+}
+
+/* Additional Premium Features */
+.salt-shaker-scheduled-change .premium-features-section {
+    margin-top: 25px;
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-scheduled-change .premium-features-section h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: var(--ss-light-bg);
+    border: 1px dashed var(--ss-border-dashed);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.salt-shaker-scheduled-change .premium-feature-item .components-base-control,
+.salt-shaker-scheduled-change .premium-feature-item .components-base-control__field {
+    margin-bottom: 0;
+}
+
+/* Immediate Change Section */
+.salt-shaker-immediate-change {
+    margin-bottom: var(--ss-spacing-xl);
+}
+
+.salt-shaker-immediate-change h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.salt-shaker-immediate-change .immediate-change-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ss-spacing-md);
+}
+
+.salt-shaker-immediate-change .immediate-change-description {
+    color: var(--ss-text-secondary);
+    line-height: 1.5;
+}
+
+.salt-shaker-immediate-change .immediate-change-description p {
+    margin: 0 0 12px 0;
+}
+
+.salt-shaker-immediate-change .immediate-change-description p:last-child {
+    margin-bottom: 0;
+}
+
+.salt-shaker-immediate-change .immediate-change-action {
+    margin-top: 10px;
+}
+
+.salt-shaker-immediate-change .change-salts-button {
+    display: flex;
+    align-items: center;
+    gap: var(--ss-spacing-xs);
+}
+
+.salt-shaker-immediate-change .salt-shaker-notice {
+    margin: 0;
+}
+
+/* Modal Styles */
+.salt-shaker-confirm-modal .modal-content {
+    padding: var(--ss-spacing) 0;
+}
+
+.salt-shaker-confirm-modal .modal-info {
+    color: #757575;
+    font-style: italic;
+    margin-bottom: var(--ss-spacing-lg);
+}
+
+.salt-shaker-confirm-modal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ss-spacing-sm);
+    margin-top: var(--ss-spacing-lg);
+}
+
+/* Next Scheduled Update */
+.salt-shaker-scheduled-change .next-scheduled-update {
+    background: var(--ss-blue-light);
+    border-left: 4px solid var(--ss-primary);
+    padding: 10px 15px;
+    margin-bottom: var(--ss-spacing-md);
+}
+
+.salt-shaker-scheduled-change .next-scheduled-update p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.salt-shaker-scheduled-change .next-scheduled-update strong {
+    font-weight: 600;
+}
+
+/* Pro Features Section */
+.salt-shaker-pro-features {
+    margin: var(--ss-spacing-md) 0;
+}
+
+.salt-shaker-pro-features .components-card {
+    background: var(--ss-white);
+    border: 1px solid #e2e4e7;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.salt-shaker-pro-features .components-card__header {
+    background: linear-gradient(135deg, var(--ss-primary) 0%, var(--ss-primary-hover) 100%);
+    border-bottom: none;
+    padding: var(--ss-spacing-md) var(--ss-spacing-lg);
+}
+
+.salt-shaker-pro-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.salt-shaker-pro-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ss-white);
+}
+
+.salt-shaker-pro-badge {
+    background: var(--ss-premium);
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 10px;
+}
+
+.salt-shaker-pro-features .components-card__body {
+    padding: var(--ss-spacing-xxl) var(--ss-spacing-lg);
+}
+
+/* Pro Features Grid */
+.salt-shaker-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--ss-spacing-lg);
+    margin-bottom: var(--ss-spacing-xxl);
+}
+
+.salt-shaker-feature-item {
+    background: var(--ss-blue-light);
+    border: 1px solid var(--ss-primary);
+    border-radius: 8px;
+    padding: var(--ss-spacing-md);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ss-spacing);
+}
+
+.salt-shaker-feature-item:hover {
+    border-color: var(--ss-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-icon {
+    background: var(--ss-white);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--ss-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ss-primary);
+}
+
+.feature-icon .components-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.feature-content {
+    flex: 1;
+}
+
+.feature-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+
+.feature-content p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ss-text-secondary);
+}
+
+/* Pro Benefits */
+.salt-shaker-pro-benefits {
+    background: var(--ss-blue-light);
+    border: 1px solid var(--ss-primary);
+    border-radius: 8px;
+    padding: var(--ss-spacing-md);
+    margin-top: var(--ss-spacing-xxl);
+}
+
+.salt-shaker-pro-benefits h3 {
+    margin: 0 0 var(--ss-spacing) 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+
+.salt-shaker-pro-benefits ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--ss-spacing-sm);
+}
+
+.salt-shaker-pro-benefits li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ss-text-secondary);
+}
+
+.salt-shaker-pro-benefits li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--ss-primary);
+    font-weight: bold;
+}
+
+/* Pro CTA */
+.salt-shaker-pro-cta {
+    text-align: center;
+    padding: var(--ss-spacing-xxl);
+    background: var(--ss-blue-light);
+    border: 1px solid var(--ss-primary);
+    border-radius: 8px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.salt-shaker-pro-offer {
+    margin-bottom: var(--ss-spacing-lg);
+}
+
+.offer-badge {
+    display: inline-block;
+    background: var(--ss-premium);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.pricing-info {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.original-price {
+    color: var(--ss-text-secondary);
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.discounted-price {
+    color: var(--ss-primary);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.period {
+    color: var(--ss-text-secondary);
+    font-size: 14px;
+}
+
+.salt-shaker-pro-discount {
+    margin: 0 0 var(--ss-spacing) 0;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ss-text);
+    font-weight: 500;
+}
+
+.coupon-code {
+    display: inline-block;
+    background: var(--ss-white);
+    border: 1px dashed var(--ss-primary);
+    color: var(--ss-primary);
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.upgrade-button {
+    height: 44px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--ss-primary);
+    border-color: var(--ss-primary);
+}
+
+.upgrade-button:hover {
+    background: var(--ss-primary-hover);
+    border-color: var(--ss-primary-hover);
+}

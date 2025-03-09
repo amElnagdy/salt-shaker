@@ -18,408 +18,408 @@ msgstr ""
 #: salt-shaker.php
 #: includes/Admin.php:52
 msgid "Salt Shaker"
-msgstr ""
+msgstr "Salt Shaker"
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
 #: salt-shaker.php
 msgid "https://nagdy.me/"
-msgstr ""
+msgstr "https://nagdy.me/"
 
 #. Description of the plugin
 #: salt-shaker.php
 msgid "A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security."
-msgstr ""
+msgstr "תוסף המשנה את המפתחות הייחודיים לאימות וה-Salt של וורדפרס כדי לשפר ולחזק את האבטחה של וורדפרס."
 
 #. Author of the plugin
 #: salt-shaker.php
 msgid "Nagdy"
-msgstr ""
+msgstr "נגדי"
 
 #: includes/Admin.php:39
 msgid "Settings"
-msgstr ""
+msgstr "הגדרות"
 
 #: includes/Admin.php:51
 #: assets/build/admin.js:1
 #: assets/js/admin.js:42
 msgid "Salt Shaker Settings"
-msgstr ""
+msgstr "הגדרות Salt Shaker"
 
 #: includes/Admin.php:69
 msgid "The file which contains your salt keys is not writable. First, make sure it exists then read how to setup the correct permissions on <a href=\"%1$s\">WordPress codex</a>."
-msgstr ""
+msgstr "הקובץ המכיל את מפתחות המלח שלך אינו ניתן לכתיבה. ראשית, ודא שהוא קיים ואז קרא כיצד להגדיר את ההרשאות הנכונות ב<a href=\"%1$s\">קודקס וורדפרס</a>."
 
 #: includes/Admin.php:125
 #: includes/Admin.php:146
 #: includes/Admin.php:198
 msgid "Unauthorized access"
-msgstr ""
+msgstr "גישה לא מורשית"
 
 #: includes/Admin.php:151
 msgid "Cannot save settings: wp-config.php is not writable."
-msgstr ""
+msgstr "לא ניתן לשמור הגדרות: wp-config.php אינו ניתן לכתיבה."
 
 #: includes/Admin.php:171
 msgid "Invalid schedule interval"
-msgstr ""
+msgstr "מרווח זמן לא חוקי"
 
 #: includes/Admin.php:178
 msgid "Failed to schedule the event"
-msgstr ""
+msgstr "נכשל בתזמון האירוע"
 
 #: includes/Admin.php:189
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:56
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "ההגדרות נשמרו בהצלחה"
 
 #: includes/Admin.php:203
 msgid "Cannot change salts: wp-config.php is not writable."
-msgstr ""
+msgstr "לא ניתן לשנות מלחים: wp-config.php אינו ניתן לכתיבה."
 
 #: includes/Admin.php:208
 msgid "Salt keys updated successfully"
-msgstr ""
+msgstr "מפתחות ה-Salt עודכנו בהצלחה"
 
 #. translators: %s: URL to Salt Shaker settings page
 #: includes/Admin.php:233
 msgid "Salt Shaker is not working due to a configuration error. Please visit <a href=\"%s\">the settings page</a> to resolve this error."
-msgstr ""
+msgstr "Salt Shaker אינו פועל בשל שגיאת תצורה. אנא בקר <a href=\"%s\">בדף ההגדרות</a> כדי לפתור שגיאה זו."
 
 #: includes/Core.php:207
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:134
 msgid "Weekly"
-msgstr ""
+msgstr "שבועי"
 
 #: includes/Core.php:214
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:135
 msgid "Monthly"
-msgstr ""
+msgstr "חודשי"
 
 #: includes/Core.php:221
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:136
 msgid "Quarterly"
-msgstr ""
+msgstr "רבעוני"
 
 #: includes/Core.php:228
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:137
 msgid "Biannually"
-msgstr ""
+msgstr "חצי שנתי"
 
 #: includes/Core.php:252
 msgid "wp-config.php file not found or not accessible."
-msgstr ""
+msgstr "קובץ wp-config.php לא נמצא או לא נגיש."
 
 #. translators: %s: wp-config.php file path
 #: includes/Core.php:262
 msgid "wp-config.php file (%s) is not writable. Please check file permissions."
-msgstr ""
+msgstr "קובץ wp-config.php (%s) אינו ניתן לכתיבה. אנא בדוק את הרשאות הקובץ."
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:42
 msgid "Current Salt Keys:"
-msgstr ""
+msgstr "מפתחות ה-Salt הנוכחיים:"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:46
 msgid "Click to hide"
-msgstr ""
+msgstr "לחץ להסתרה"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:47
 msgid "Click to view"
-msgstr ""
+msgstr "לחץ לצפייה"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:67
 msgid "The following table shows the current set of the salt keys in the configuration file."
-msgstr ""
+msgstr "הטבלה הבאה מציגה את הסט הנוכחי של מפתחות המלח בקובץ התצורה."
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:75
 msgid "Name"
-msgstr ""
+msgstr "שם"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:76
 msgid "Value"
-msgstr ""
+msgstr "ערך"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:84
 msgid "Not set"
-msgstr ""
+msgstr "לא מוגדר"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:59
 msgid "Salt Shaker cannot access your wp-config.php file. Please check file permissions or contact your hosting provider."
-msgstr ""
+msgstr "Salt Shaker אינו יכול לגשת לקובץ wp-config.php שלך. אנא בדוק את הרשאות הקובץ או פנה לספק האחסון שלך."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:89
 msgid "Scheduled Salt Keys Change:"
-msgstr ""
+msgstr "שינוי מתוזמן של מפתחות Salt:"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:91
 #: assets/js/components/ScheduledChange.js:97
 msgid "Salt Shaker cannot modify your wp-config.php file. Please check file permissions or contact your hosting provider."
-msgstr ""
+msgstr "Salt Shaker אינו יכול לשנות את קובץ wp-config.php שלך. אנא בדוק את הרשאות הקובץ או פנה לספק האחסון שלך."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:117
 msgid "Enable automatic salt key updates"
-msgstr ""
+msgstr "אפשר עדכונים אוטומטיים של מפתחות מלח"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:130
 msgid "Update Interval"
-msgstr ""
+msgstr "מרווח עדכון"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:133
 msgid "Daily"
-msgstr ""
+msgstr "יומי"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:149
 msgid "The salt keys will be automatically changed on"
-msgstr ""
+msgstr "מפתחות המלח ישתנו אוטומטית ב"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:160
 msgid "Specific Day & Time"
-msgstr ""
+msgstr "יום ושעה ספציפיים"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:163
 #: assets/js/components/ScheduledChange.js:206
 #: assets/js/components/ScheduledChange.js:224
 msgid "Premium"
-msgstr ""
+msgstr "פרימיום"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:171
 msgid "Day"
-msgstr ""
+msgstr "יום"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:174
 msgid "Select a day"
-msgstr ""
+msgstr "בחר יום"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:182
 msgid "Time"
-msgstr ""
+msgstr "שעה"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:185
 msgid "Select a time"
-msgstr ""
+msgstr "בחר שעה"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:191
 msgid "Additional Features"
-msgstr ""
+msgstr "תכונות נוספות"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:195
 msgid "Remind me to update the keys manually"
-msgstr ""
+msgstr "הזכר לי לעדכן את המפתחות ידנית"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:213
 msgid "Notify me when an automatic update takes place"
-msgstr ""
+msgstr "הודע לי כאשר מתבצע עדכון אוטומטי"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:232
 msgid "Upgrade to Premium for specific scheduling, reminders, and notifications."
-msgstr ""
+msgstr "שדרג לפרימיום עבור תזמון ספציפי, תזכורות והתראות."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:81
 #: assets/js/components/ScheduledChange.js:239
 msgid "Upgrade Now"
-msgstr ""
+msgstr "שדרג עכשיו"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:76
 msgid "An error occurred while saving settings."
-msgstr ""
+msgstr "אירעה שגיאה בעת שמירת ההגדרות."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:252
 msgid "Save Settings"
-msgstr ""
+msgstr "שמור הגדרות"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:66
 msgid "Manual Salt Keys Change"
-msgstr ""
+msgstr "שינוי ידני של מפתחות Salt"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:72
 msgid "You can manually change your WordPress salt keys at any time. This will log out all users (including you) and require everyone to log in again."
-msgstr ""
+msgstr "אתה יכול לשנות ידנית את מפתחות המלח של וורדפרס בכל עת. זה יגרום לכל המשתמשים (כולל אתה) להתנתק ולדרוש מכולם להתחבר שוב."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:78
 msgid "This is useful if you suspect unauthorized access to your site or want to force all users to re-authenticate."
-msgstr ""
+msgstr "זה שימושי אם אתה חושד בגישה לא מורשית לאתר שלך או רוצה לאלץ את כל המשתמשים להתאמת מחדש."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:119
 msgid "Changing Salt Keys..."
-msgstr ""
+msgstr "משנה מפתחות Salt..."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:122
 msgid "Change Salt Keys Now"
-msgstr ""
+msgstr "שנה מפתחות Salt עכשיו"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:133
 msgid "Confirm Salt Key Change"
-msgstr ""
+msgstr "אשר שינוי מפתח Salt"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:139
 msgid "Are you sure you want to change your WordPress salt keys?"
-msgstr ""
+msgstr "האם אתה בטוח שברצונך לשנות את מפתחות המלח של וורדפרס?"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:145
 msgid "This will log out all users (including you) and require everyone to log in again."
-msgstr ""
+msgstr "זה יגרום לכל המשתמשים (כולל אתה) להתנתק ולדרוש מכולם להתחבר שוב."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:152
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:23
 msgid "Salt keys have been updated. You will be redirected to login..."
-msgstr ""
+msgstr "מפתחות ה-Salt עודכנו. תועבר להתחברות..."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:47
 msgid "An error occurred while changing salt keys."
-msgstr ""
+msgstr "אירעה שגיאה בעת שינוי מפתחות המלח."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:162
 msgid "Yes, Change Salt Keys"
-msgstr ""
+msgstr "כן, שנה מפתחות Salt"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:8
 msgid "Premium 24/7 Support"
-msgstr ""
+msgstr "תמיכה פרימיום 24/7"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:9
 msgid "Get expert help anytime with our dedicated support team."
-msgstr ""
+msgstr "קבל עזרה מקצועית בכל עת עם צוות התמיכה המסור שלנו."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:13
 msgid "Smart Scheduling"
-msgstr ""
+msgstr "תזמון חכם"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:14
 msgid "Choose the perfect time for updates - when your users are least active. No more unexpected logouts!"
-msgstr ""
+msgstr "בחר את הזמן המושלם לעדכונים - כאשר המשתמשים שלך הכי פחות פעילים. אין יותר התנתקויות בלתי צפויות!"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:18
 msgid "Instant Notifications"
-msgstr ""
+msgstr "התראות מיידיות"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:19
 msgid "Get immediate email alerts when salt keys are updated. Stay informed and in control."
-msgstr ""
+msgstr "קבל התראות מיידיות בדוא\"ל כאשר מפתחות המלח מתעדכנים. הישאר מעודכן ובשליטה."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:23
 msgid "Custom Email Alerts"
-msgstr ""
+msgstr "התראות דוא\"ל מותאמות אישית"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:24
 msgid "Send notifications to your preferred email address. Perfect for team management."
-msgstr ""
+msgstr "שלח התראות לכתובת הדוא\"ל המועדפת עליך. מושלם לניהול צוות."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:28
 msgid "Smart Reminders"
-msgstr ""
+msgstr "תזכורות חכמות"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:29
 msgid "Never miss an update with intelligent reminders when it's time to rotate your keys."
-msgstr ""
+msgstr "לעולם אל תפספס עדכון עם תזכורות חכמות כשהגיע הזמן לסובב את המפתחות שלך."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:38
 msgid "Unlock Premium Features"
-msgstr ""
+msgstr "שחרר תכונות פרימיום"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:39
 msgid "PRO"
-msgstr ""
+msgstr "PRO"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:63
 msgid "LIMITED TIME OFFER"
-msgstr ""
+msgstr "הצעה לזמן מוגבל"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:65
 msgid "Get 50% off Salt Shaker PRO!"
-msgstr ""
+msgstr "קבל 50% הנחה על Salt Shaker PRO!"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:68
 msgid "9.99"
-msgstr ""
+msgstr "9.99"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:69
 msgid "4.99"
-msgstr ""
+msgstr "4.99"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:70
 msgid "year"
-msgstr ""
+msgstr "שנה"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:47
 msgid "WordPress salt keys or security keys are codes that help protect important information on your website. They make it harder for hackers to access your website by making passwords more complex. <br /> You don't need to remember these codes, Salt Shaker plugin takes care of generating the codes directly from WordPress API."
-msgstr ""
+msgstr "מפתחות ה-Salt או מפתחות האבטחה של וורדפרס הם קודים העוזרים להגן על מידע חשוב באתר שלך. הם מקשים על האקרים לגשת לאתר שלך על ידי הפיכת הסיסמאות למורכבות יותר. <br /> אינך צריך לזכור קודים אלה, תוסף Salt Shaker דואג ליצירת הקודים ישירות מה-API של וורדפרס."
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:60
 msgid "Do you find this plugin useful? Please"
-msgstr ""
+msgstr "האם אתה מוצא תוסף זה שימושי? אנא"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:66
 msgid "Rate it"
-msgstr ""
+msgstr "דרג אותו"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:68
 msgid "on WordPress.org. BIG Thanks in advance!"
-msgstr ""
+msgstr "ב-WordPress.org. תודה רבה מראש!"

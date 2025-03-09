@@ -1,0 +1,14 @@
+{
+    "name": "nagdy/salt-shaker",
+    "description": "A WordPress plugin to manage salt keys",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "SaltShaker\\": "includes/"
+        }
+    },
+    "require": {
+        "freemius/wordpress-sdk": "^2.11"
+    }
+}

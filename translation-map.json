@@ -1,0 +1,7 @@
+{
+  "assets/js/admin.js": "assets/build/admin.js",
+  "assets/js/components/ProFeatures.js": "assets/build/admin.js",
+  "assets/js/components/CurrentSalts.js": "assets/build/admin.js",
+  "assets/js/components/ImmediateChange.js": "assets/build/admin.js",
+  "assets/js/components/ScheduledChange.js": "assets/build/admin.js"
+}

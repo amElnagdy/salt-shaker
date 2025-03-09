@@ -18,408 +18,408 @@ msgstr ""
 #: salt-shaker.php
 #: includes/Admin.php:52
 msgid "Salt Shaker"
-msgstr ""
+msgstr "Salt Shaker"
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
 #: salt-shaker.php
 msgid "https://nagdy.me/"
-msgstr ""
+msgstr "https://nagdy.me/"
 
 #. Description of the plugin
 #: salt-shaker.php
 msgid "A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security."
-msgstr ""
+msgstr "Ein Plugin, das die eindeutigen Authentifizierungsschlüssel und Salt-Werte von WordPress ändert, um die WordPress-Sicherheit zu verbessern und zu stärken."
 
 #. Author of the plugin
 #: salt-shaker.php
 msgid "Nagdy"
-msgstr ""
+msgstr "Nagdy"
 
 #: includes/Admin.php:39
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: includes/Admin.php:51
 #: assets/build/admin.js:1
 #: assets/js/admin.js:42
 msgid "Salt Shaker Settings"
-msgstr ""
+msgstr "Salt Shaker Einstellungen"
 
 #: includes/Admin.php:69
 msgid "The file which contains your salt keys is not writable. First, make sure it exists then read how to setup the correct permissions on <a href=\"%1$s\">WordPress codex</a>."
-msgstr ""
+msgstr "Die Datei, die Ihre Salt-Schlüssel enthält, ist nicht beschreibbar. Stellen Sie zunächst sicher, dass sie existiert, und lesen Sie dann, wie Sie die korrekten Berechtigungen im <a href=\"%1$s\">WordPress Codex</a> einrichten."
 
 #: includes/Admin.php:125
 #: includes/Admin.php:146
 #: includes/Admin.php:198
 msgid "Unauthorized access"
-msgstr ""
+msgstr "Unbefugter Zugriff"
 
 #: includes/Admin.php:151
 msgid "Cannot save settings: wp-config.php is not writable."
-msgstr ""
+msgstr "Einstellungen können nicht gespeichert werden: wp-config.php ist nicht beschreibbar."
 
 #: includes/Admin.php:171
 msgid "Invalid schedule interval"
-msgstr ""
+msgstr "Ungültiges Planungsintervall"
 
 #: includes/Admin.php:178
 msgid "Failed to schedule the event"
-msgstr ""
+msgstr "Zeitplanmäßige Ausführung des Ereignisses fehlgeschlagen"
 
 #: includes/Admin.php:189
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:56
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "Einstellungen erfolgreich gespeichert"
 
 #: includes/Admin.php:203
 msgid "Cannot change salts: wp-config.php is not writable."
-msgstr ""
+msgstr "Salts können nicht geändert werden: wp-config.php ist nicht beschreibbar."
 
 #: includes/Admin.php:208
 msgid "Salt keys updated successfully"
-msgstr ""
+msgstr "Salt-Schlüssel erfolgreich aktualisiert"
 
 #. translators: %s: URL to Salt Shaker settings page
 #: includes/Admin.php:233
 msgid "Salt Shaker is not working due to a configuration error. Please visit <a href=\"%s\">the settings page</a> to resolve this error."
-msgstr ""
+msgstr "Salt Shaker funktioniert aufgrund eines Konfigurationsfehlers nicht. Bitte besuchen Sie <a href=\"%s\">die Einstellungsseite</a>, um diesen Fehler zu beheben."
 
 #: includes/Core.php:207
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:134
 msgid "Weekly"
-msgstr ""
+msgstr "Wöchentlich"
 
 #: includes/Core.php:214
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:135
 msgid "Monthly"
-msgstr ""
+msgstr "Monatlich"
 
 #: includes/Core.php:221
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:136
 msgid "Quarterly"
-msgstr ""
+msgstr "Vierteljährlich"
 
 #: includes/Core.php:228
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:137
 msgid "Biannually"
-msgstr ""
+msgstr "Halbjährlich"
 
 #: includes/Core.php:252
 msgid "wp-config.php file not found or not accessible."
-msgstr ""
+msgstr "wp-config.php Datei nicht gefunden oder nicht zugänglich."
 
 #. translators: %s: wp-config.php file path
 #: includes/Core.php:262
 msgid "wp-config.php file (%s) is not writable. Please check file permissions."
-msgstr ""
+msgstr "wp-config.php Datei (%s) ist nicht beschreibbar. Bitte überprüfen Sie die Dateiberechtigungen."
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:42
 msgid "Current Salt Keys:"
-msgstr ""
+msgstr "Aktuelle Salt-Schlüssel:"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:46
 msgid "Click to hide"
-msgstr ""
+msgstr "Klicken zum Verbergen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:47
 msgid "Click to view"
-msgstr ""
+msgstr "Klicken zum Anzeigen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:67
 msgid "The following table shows the current set of the salt keys in the configuration file."
-msgstr ""
+msgstr "Die folgende Tabelle zeigt den aktuellen Satz der Salt-Schlüssel in der Konfigurationsdatei."
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:75
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:76
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:84
 msgid "Not set"
-msgstr ""
+msgstr "Nicht festgelegt"
 
 #: assets/build/admin.js:1
 #: assets/js/components/CurrentSalts.js:59
 msgid "Salt Shaker cannot access your wp-config.php file. Please check file permissions or contact your hosting provider."
-msgstr ""
+msgstr "Salt Shaker kann nicht auf Ihre wp-config.php-Datei zugreifen. Bitte überprüfen Sie die Dateiberechtigungen oder kontaktieren Sie Ihren Hosting-Anbieter."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:89
 msgid "Scheduled Salt Keys Change:"
-msgstr ""
+msgstr "Geplante Änderung der Salt-Schlüssel:"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:91
 #: assets/js/components/ScheduledChange.js:97
 msgid "Salt Shaker cannot modify your wp-config.php file. Please check file permissions or contact your hosting provider."
-msgstr ""
+msgstr "Salt Shaker kann Ihre wp-config.php-Datei nicht modifizieren. Bitte überprüfen Sie die Dateiberechtigungen oder kontaktieren Sie Ihren Hosting-Anbieter."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:117
 msgid "Enable automatic salt key updates"
-msgstr ""
+msgstr "Automatische Aktualisierung der Salt-Schlüssel aktivieren"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:130
 msgid "Update Interval"
-msgstr ""
+msgstr "Aktualisierungsintervall"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:133
 msgid "Daily"
-msgstr ""
+msgstr "Täglich"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:149
 msgid "The salt keys will be automatically changed on"
-msgstr ""
+msgstr "Die Salt-Schlüssel werden automatisch geändert am"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:160
 msgid "Specific Day & Time"
-msgstr ""
+msgstr "Spezifischer Tag & Zeit"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:163
 #: assets/js/components/ScheduledChange.js:206
 #: assets/js/components/ScheduledChange.js:224
 msgid "Premium"
-msgstr ""
+msgstr "Premium"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:171
 msgid "Day"
-msgstr ""
+msgstr "Tag"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:174
 msgid "Select a day"
-msgstr ""
+msgstr "Wählen Sie einen Tag"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:182
 msgid "Time"
-msgstr ""
+msgstr "Zeit"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:185
 msgid "Select a time"
-msgstr ""
+msgstr "Wählen Sie eine Zeit"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:191
 msgid "Additional Features"
-msgstr ""
+msgstr "Zusätzliche Funktionen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:195
 msgid "Remind me to update the keys manually"
-msgstr ""
+msgstr "Erinnern Sie mich daran, die Schlüssel manuell zu aktualisieren"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:213
 msgid "Notify me when an automatic update takes place"
-msgstr ""
+msgstr "Benachrichtigen Sie mich, wenn eine automatische Aktualisierung stattfindet"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:232
 msgid "Upgrade to Premium for specific scheduling, reminders, and notifications."
-msgstr ""
+msgstr "Upgraden Sie auf Premium für spezifische Planung, Erinnerungen und Benachrichtigungen."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:81
 #: assets/js/components/ScheduledChange.js:239
 msgid "Upgrade Now"
-msgstr ""
+msgstr "Jetzt upgraden"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:76
 msgid "An error occurred while saving settings."
-msgstr ""
+msgstr "Bei der Speicherung der Einstellungen ist ein Fehler aufgetreten."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ScheduledChange.js:252
 msgid "Save Settings"
-msgstr ""
+msgstr "Einstellungen speichern"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:66
 msgid "Manual Salt Keys Change"
-msgstr ""
+msgstr "Manuelle Änderung der Salt-Schlüssel"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:72
 msgid "You can manually change your WordPress salt keys at any time. This will log out all users (including you) and require everyone to log in again."
-msgstr ""
+msgstr "Sie können Ihre WordPress Salt-Schlüssel jederzeit manuell ändern. Dies wird alle Benutzer (einschließlich Ihnen) abmelden und erfordert eine erneute Anmeldung aller Benutzer."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:78
 msgid "This is useful if you suspect unauthorized access to your site or want to force all users to re-authenticate."
-msgstr ""
+msgstr "Dies ist nützlich, wenn Sie einen unbefugten Zugriff auf Ihre Website vermuten oder alle Benutzer zur erneuten Authentifizierung zwingen möchten."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:119
 msgid "Changing Salt Keys..."
-msgstr ""
+msgstr "Salt-Schlüssel werden geändert..."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:122
 msgid "Change Salt Keys Now"
-msgstr ""
+msgstr "Salt-Schlüssel jetzt ändern"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:133
 msgid "Confirm Salt Key Change"
-msgstr ""
+msgstr "Salt-Schlüssel-Änderung bestätigen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:139
 msgid "Are you sure you want to change your WordPress salt keys?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie Ihre WordPress Salt-Schlüssel ändern möchten?"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:145
 msgid "This will log out all users (including you) and require everyone to log in again."
-msgstr ""
+msgstr "Dies wird alle Benutzer (einschließlich Ihnen) abmelden und erfordert eine erneute Anmeldung aller Benutzer."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:152
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:23
 msgid "Salt keys have been updated. You will be redirected to login..."
-msgstr ""
+msgstr "Salt-Schlüssel wurden aktualisiert. Sie werden zur Anmeldung weitergeleitet..."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:47
 msgid "An error occurred while changing salt keys."
-msgstr ""
+msgstr "Bei der Änderung der Salt-Schlüssel ist ein Fehler aufgetreten."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ImmediateChange.js:162
 msgid "Yes, Change Salt Keys"
-msgstr ""
+msgstr "Ja, Salt-Schlüssel ändern"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:8
 msgid "Premium 24/7 Support"
-msgstr ""
+msgstr "Premium 24/7 Support"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:9
 msgid "Get expert help anytime with our dedicated support team."
-msgstr ""
+msgstr "Erhalten Sie jederzeit fachkundige Unterstützung durch unser engagiertes Support-Team."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:13
 msgid "Smart Scheduling"
-msgstr ""
+msgstr "Intelligente Planung"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:14
 msgid "Choose the perfect time for updates - when your users are least active. No more unexpected logouts!"
-msgstr ""
+msgstr "Wählen Sie den perfekten Zeitpunkt für Aktualisierungen - wenn Ihre Benutzer am wenigsten aktiv sind. Keine unerwarteten Abmeldungen mehr!"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:18
 msgid "Instant Notifications"
-msgstr ""
+msgstr "Sofortige Benachrichtigungen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:19
 msgid "Get immediate email alerts when salt keys are updated. Stay informed and in control."
-msgstr ""
+msgstr "Erhalten Sie umgehend E-Mail-Benachrichtigungen, wenn Salt-Schlüssel aktualisiert werden. Bleiben Sie informiert und behalten Sie die Kontrolle."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:23
 msgid "Custom Email Alerts"
-msgstr ""
+msgstr "Benutzerdefinierte E-Mail-Benachrichtigungen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:24
 msgid "Send notifications to your preferred email address. Perfect for team management."
-msgstr ""
+msgstr "Senden Sie Benachrichtigungen an Ihre bevorzugte E-Mail-Adresse. Perfekt für Teammanagement."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:28
 msgid "Smart Reminders"
-msgstr ""
+msgstr "Intelligente Erinnerungen"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:29
 msgid "Never miss an update with intelligent reminders when it's time to rotate your keys."
-msgstr ""
+msgstr "Verpassen Sie nie wieder eine Aktualisierung mit intelligenten Erinnerungen, wenn es Zeit ist, Ihre Schlüssel zu rotieren."
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:38
 msgid "Unlock Premium Features"
-msgstr ""
+msgstr "Premium-Funktionen freischalten"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:39
 msgid "PRO"
-msgstr ""
+msgstr "PRO"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:63
 msgid "LIMITED TIME OFFER"
-msgstr ""
+msgstr "ZEITLICH BEGRENZTES ANGEBOT"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:65
 msgid "Get 50% off Salt Shaker PRO!"
-msgstr ""
+msgstr "Erhalten Sie 50% Rabatt auf Salt Shaker PRO!"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:68
 msgid "9.99"
-msgstr ""
+msgstr "9.99"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:69
 msgid "4.99"
-msgstr ""
+msgstr "4.99"
 
 #: assets/build/admin.js:1
 #: assets/js/components/ProFeatures.js:70
 msgid "year"
-msgstr ""
+msgstr "jahr"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:47
 msgid "WordPress salt keys or security keys are codes that help protect important information on your website. They make it harder for hackers to access your website by making passwords more complex. <br /> You don't need to remember these codes, Salt Shaker plugin takes care of generating the codes directly from WordPress API."
-msgstr ""
+msgstr "WordPress Salt-Schlüssel oder Sicherheitsschlüssel sind Codes, die wichtige Informationen auf Ihrer Website schützen. Sie erschweren Hackern den Zugriff auf Ihre Website, indem sie Passwörter komplexer machen. <br /> Sie müssen sich diese Codes nicht merken, das Salt Shaker Plugin kümmert sich um die Generierung der Codes direkt über die WordPress API."
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:60
 msgid "Do you find this plugin useful? Please"
-msgstr ""
+msgstr "Finden Sie dieses Plugin nützlich? Bitte"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:66
 msgid "Rate it"
-msgstr ""
+msgstr "Bewerten Sie es"
 
 #: assets/build/admin.js:1
 #: assets/js/admin.js:68
 msgid "on WordPress.org. BIG Thanks in advance!"
-msgstr ""
+msgstr "auf WordPress.org. VIELEN Dank im Voraus!"
