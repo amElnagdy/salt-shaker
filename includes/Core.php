@@ -7,11 +7,11 @@ use Exception;
 
 class Core {
 	private const SALT_KEYS = [
-		"'AUTH_KEY',",
+		'AUTH_KEY',
 		'SECURE_AUTH_KEY',
 		'LOGGED_IN_KEY',
 		'NONCE_KEY',
-		"'AUTH_SALT',",
+		'AUTH_SALT',
 		'SECURE_AUTH_SALT',
 		'LOGGED_IN_SALT',
 		'NONCE_SALT'
@@ -31,8 +31,7 @@ class Core {
 		$salts = [];
 		foreach ( self::SALT_KEYS as $key ) {
 			try {
-				$key           = trim( $key, ",'" );  // Clean up the key
-				$value         = defined( $key ) ? constant( $key ) : '';
+				$value = defined( $key ) ? constant( $key ) : '';
 				$salts[ $key ] = $value;
 			} catch ( Error|Exception $e ) {
 				$salts[ $key ] = '';
@@ -81,12 +80,15 @@ class Core {
 	 */
 	private function generateLocalSalts(): string {
 		$salts = '';
-		foreach ( self::SALT_KEYS as $salt ) {
+		foreach ( self::SALT_KEYS as $salt_key ) {
 			$generated_password = wp_generate_password( 64, true, true );
-			$salts              .= "define('" . $salt . "', '" . $generated_password . "');\n";
+			$generated_password = str_replace( '\\', '', $generated_password );
+			$generated_password = str_replace( "'", "\'", $generated_password );
+			$generated_password = str_replace( ' ', '', $generated_password );
+			$salts .= "define('" . $salt_key . "', '" . $generated_password . "');\n";
 		}
 
-		return $salts;
+		return $this->processSalts( $salts );
 	}
 
 	/**
@@ -98,29 +100,36 @@ class Core {
 	 */
 	private function processSalts( string $salts ) {
 		// First validate the overall format
-		if ( ! preg_match( "/define\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\);/", $salts ) ) {
+		if ( ! preg_match( "/define\s*\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\)\s*;/i", $salts ) ) {
 			return false;
 		}
 
-		$lines           = explode( "\n", $salts );
+		$lines = explode( "\n", $salts );
 		$processed_lines = array_map( function ( $line ) {
 			if ( empty( trim( $line ) ) ) {
 				return '';
 			}
-
-			// Handle escaped backslashes at the end of the salt value
+			
+			// Handle escaped backslashes and quotes
+			$line = preg_replace( "/(.*)'(.*?)\\\'/", "$1'$2'", $line );
+			$line = preg_replace( "/\\\\'/", "'", $line ); // Replace \' with '
+			$line = preg_replace( "/\\\\\\\\/", "", $line ); // Remove backslashes
+			
+			// Clean up any other potential syntax issues
 			$line = preg_replace( "/'([^']*?)\\\\'$/", "'$1'", $line );
-
-			// Ensure the line is properly formatted
-			if ( ! preg_match( "/^define\(\s*'[A-Z_]+'\s*,\s*'[^']+'\s*\);$/", $line ) ) {
-				return '';
+			
+			// Standardize define format
+			if ( preg_match( "/define\s*\(\s*['\"]([A-Z_]+)['\"][\s,]*['\"](.*?)['\"]\s*\)\s*;/i", $line, $matches ) ) {
+				$key = $matches[1];
+				$value = $matches[2];
+				// Standardize to single quotes
+				$line = "define('" . $key . "', '" . $value . "');";
 			}
-
+			
 			return $line;
 		}, $lines );
 
 		$processed_lines = array_filter( $processed_lines );
-
 		return implode( "\n", $processed_lines );
 	}
 
@@ -133,20 +142,8 @@ class Core {
 	 * @return bool
 	 */
 	private function writeSalts( array $salt_keys, array $new_salts ): bool {
-		global $wp_filesystem;
-
-		if ( ! function_exists( 'WP_Filesystem' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/file.php';
-		}
-
 		$config_file = $this->getConfigFile();
 		if ( ! $config_file ) {
-			return false;
-		}
-
-		// 
-		$creds = request_filesystem_credentials( '', '', false, false, null );
-		if ( ! WP_Filesystem( $creds ) ) {
 			return false;
 		}
 
@@ -159,63 +156,72 @@ class Core {
 		// Create a unique temporary file
 		$tmp_config_file = $config_file . '.tmp.' . uniqid( '', true );
 
-		// Read the original file
-		$config_content = $wp_filesystem->get_contents( $config_file );
-		if ( false === $config_content ) {
-			return false;
-		}
+		try {
+			// Read the original file line by line
+			$reading = fopen( $config_file, 'r' );
+			if ( ! $reading ) {
+				return false;
+			}
+			
+			// Create new file
+			$writing = fopen( $tmp_config_file, 'w' );
+			if ( ! $writing ) {
+				fclose( $reading );
+				return false;
+			}
 
-		// Split into lines for processing
-		$lines     = explode( "\n", $config_content );
-		$new_lines = array();
-
-		// Process each line
-		foreach ( $lines as $line ) {
-			$replaced = false;
-			foreach ( $salt_keys as $key => $salt_value ) {
-				if ( stristr( $line, $salt_value ) ) {
-					$new_lines[] = trim( $new_salts[ $key ] );
-					$replaced    = true;
-					break;
+			// Create an array to track which keys have been replaced
+			$replaced_keys = array_fill_keys( array_keys( $salt_keys ), false );
+			
+			while ( ! feof( $reading ) ) {
+				$line = fgets( $reading );
+				$line_replaced = false;
+				
+				// Replace salt lines in place when found
+				foreach ( $salt_keys as $key => $salt_key ) {
+					// Skip keys that have already been replaced
+					if ( $replaced_keys[$key] ) {
+						continue;
+					}
+					
+					// Use regex pattern to match salt definitions more precisely
+					// This will match define('KEY_NAME', 'value'); with any spacing or quote style
+					$pattern = "/define\s*\(\s*['\"]" . preg_quote( $salt_key, '/' ) . "['\"][\s,]*['\"].*?['\"]\s*\)\s*;/i";
+					if ( preg_match( $pattern, $line ) ) {
+						// Check if we have a valid salt at this index
+						if ( isset( $new_salts[$key] ) && !empty( trim( $new_salts[$key] ) ) ) {
+							$line = $new_salts[$key] . "\n";
+							$replaced_keys[$key] = true;
+							$line_replaced = true;
+						}
+						break;
+					}
 				}
+				
+				fputs( $writing, $line );
 			}
-			if ( ! $replaced ) {
-				$new_lines[] = rtrim( $line );
+
+			fclose( $reading );
+			
+			fclose( $writing );
+			
+			// Apply the changes
+			if ( ! rename( $tmp_config_file, $config_file ) ) {
+				unlink( $tmp_config_file );
+				return false;
 			}
-		}
-
-		// Join lines back together
-		$new_content = implode( "\n", $new_lines );
-
-		// Write to temporary file
-		if ( ! $wp_filesystem->put_contents( $tmp_config_file, $new_content ) ) {
+			
+			// Restore permissions
+			chmod( $config_file, $original_perms );
+			
+			return true;
+		} catch ( Exception $e ) {
+			// Clean up on failure
+			if ( file_exists( $tmp_config_file ) ) {
+				unlink( $tmp_config_file );
+			}
 			return false;
 		}
-
-		// Set the same permissions on temporary file
-		if ( ! chmod( $tmp_config_file, $original_perms ) ) {
-			$wp_filesystem->delete( $tmp_config_file );
-			return false;
-		}
-
-		// Verify the temporary file was written correctly
-		if ( 0 === $wp_filesystem->size( $tmp_config_file ) ) {
-			$wp_filesystem->delete( $tmp_config_file );
-			return false;
-		}
-
-		// Delete original and rename temp file
-		if ( ! $wp_filesystem->delete( $config_file ) || ! $wp_filesystem->move( $tmp_config_file, $config_file ) ) {
-			$wp_filesystem->delete( $tmp_config_file );
-			return false;
-		}
-
-		// Restore original permissions to final file
-		if ( ! chmod( $config_file, $original_perms ) ) {
-			return false;
-		}
-
-		return true;
 	}
 
 	/**

@@ -3,8 +3,8 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://ko-fi.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 2.0.0
+Tested up to: 6.8
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,9 +79,9 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 == Changelog ==
 
-= 2.0.0 =
+= 2.0.1 =
 
-* Major update with complete rewrite of the plugin architecture, while keeping the same functionality.
-* Modern React-based admin interface with improved UX
+* Improved salt generation and replacement
+* WordPress 6.8 compatibility
 
 Read the full changelog [here](https://saltshakerwp.com/changelog/)

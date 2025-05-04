@@ -1,6 +1,6 @@
 {
   "name": "salt-shaker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A WordPress plugin to manage salt keys",
   "scripts": {
     "build": "wp-scripts build",
