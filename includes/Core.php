@@ -47,30 +47,82 @@ class Core {
 	 * @return bool
 	 */
 	public function shuffleSalts(): bool {
-		$http_salts = wp_remote_get( 'https://api.wordpress.org/secret-key/1.1/salt/' );
+		// Initialize audit logger
+		$audit_logger = new AuditLogger();
+		$audit_logger->start_rotation();
 
-		// Check for API failures or invalid responses
-		if (
-			is_wp_error( $http_salts ) ||
-			wp_remote_retrieve_response_code( $http_salts ) !== 200 ||
-			empty( wp_remote_retrieve_body( $http_salts ) ) ||
-			strpos( wp_remote_retrieve_body( $http_salts ), '404 Not Found' ) !== false
-		) {
-			// API call failed or invalid format, generate salts locally
-			$returned_salts = $this->generateLocalSalts();
-		} else {
-			$raw_salts       = wp_remote_retrieve_body( $http_salts );
-			$processed_salts = $this->processSalts( $raw_salts );
-			$returned_salts  = $processed_salts ? $processed_salts : $this->generateLocalSalts();
+		// Get current salts for hash comparison
+		$old_salts      = $this->getSaltsArray();
+		$old_salt_hash  = $audit_logger->hash_salts( $old_salts );
+		$config_file    = $this->getConfigFile();
+		$salt_source    = 'wordpress_api';
+
+		try {
+			$http_salts = wp_remote_get( 'https://api.wordpress.org/secret-key/1.1/salt/' );
+
+			// Check for API failures or invalid responses
+			if (
+				is_wp_error( $http_salts ) ||
+				wp_remote_retrieve_response_code( $http_salts ) !== 200 ||
+				empty( wp_remote_retrieve_body( $http_salts ) ) ||
+				strpos( wp_remote_retrieve_body( $http_salts ), '404 Not Found' ) !== false
+			) {
+				// API call failed or invalid format, generate salts locally
+				$returned_salts = $this->generateLocalSalts();
+				$salt_source    = 'local_generation';
+			} else {
+				$raw_salts       = wp_remote_retrieve_body( $http_salts );
+				$processed_salts = $this->processSalts( $raw_salts );
+				$returned_salts  = $processed_salts ? $processed_salts : $this->generateLocalSalts();
+
+				if ( ! $processed_salts ) {
+					$salt_source = 'local_generation';
+				}
+			}
+
+			$new_salts = explode( "\n", $returned_salts );
+
+			// Adding filters for additional salts.
+			$new_salts = apply_filters( 'salt_shaker_salts', $new_salts );
+			$salt_keys = apply_filters( 'salt_shaker_salt_ids', self::SALT_KEYS );
+
+			$result = $this->writeSalts( $salt_keys, $new_salts );
+
+			if ( $result ) {
+				// Get new salts hash after successful write
+				$new_salts_array = $this->getSaltsArray();
+				$new_salt_hash   = $audit_logger->hash_salts( $new_salts_array );
+
+				// Log successful rotation
+				$audit_logger->log_success( [
+					'salt_source'      => $salt_source,
+					'old_salt_hash'    => $old_salt_hash,
+					'new_salt_hash'    => $new_salt_hash,
+					'config_file_path' => $config_file,
+					'affected_users'   => $this->count_active_sessions(),
+				] );
+
+				return true;
+			} else {
+				// Log failed rotation
+				$audit_logger->log_failure( [
+					'error_message'    => __( 'Failed to write salts to configuration file.', 'salt-shaker' ),
+					'config_file_path' => $config_file,
+					'old_salt_hash'    => $old_salt_hash,
+				] );
+
+				return false;
+			}
+		} catch ( Exception $e ) {
+			// Log exception
+			$audit_logger->log_failure( [
+				'error_message'    => $e->getMessage(),
+				'config_file_path' => $config_file,
+				'old_salt_hash'    => $old_salt_hash,
+			] );
+
+			return false;
 		}
-
-		$new_salts = explode( "\n", $returned_salts );
-
-		// Adding filters for additional salts.
-		$new_salts = apply_filters( 'salt_shaker_salts', $new_salts );
-		$salt_keys = apply_filters( 'salt_shaker_salt_ids', self::SALT_KEYS );
-
-		return $this->writeSalts( $salt_keys, $new_salts );
 	}
 
 	/**
@@ -285,6 +337,24 @@ class Core {
 		}
 
 		return $schedules;
+	}
+
+	/**
+	 * Count active user sessions
+	 *
+	 * @return int Number of active sessions
+	 */
+	public function count_active_sessions(): int {
+		global $wpdb;
+
+		// Count sessions from usermeta table
+		$count = $wpdb->get_var(
+			"SELECT COUNT(DISTINCT user_id)
+			FROM {$wpdb->usermeta}
+			WHERE meta_key LIKE 'session_tokens'"
+		);
+
+		return (int) $count;
 	}
 
 	/**
