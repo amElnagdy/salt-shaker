@@ -18,6 +18,7 @@ class AuditAdmin {
 	public function init(): void {
 		add_action( 'admin_menu', array( $this, 'add_audit_menu_item' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_audit_scripts' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
 
 		// AJAX endpoints
 		add_action( 'wp_ajax_salt_shaker_get_audit_logs', [ $this, 'ajax_get_audit_logs' ] );
@@ -81,6 +82,119 @@ class AuditAdmin {
 			[ 'wp-components' ],
 			SALT_SHAKER_VERSION
 		);
+	}
+
+	/**
+	 * Add dashboard widget
+	 */
+	public function add_dashboard_widget(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		wp_add_dashboard_widget(
+			'salt_shaker_audit_widget',
+			__( 'Salt Shaker Status', 'salt-shaker' ),
+			array( $this, 'render_dashboard_widget' )
+		);
+	}
+
+	/**
+	 * Render dashboard widget
+	 */
+	public function render_dashboard_widget(): void {
+		$stats = $this->audit_logger->get_stats();
+
+		// Enqueue widget styles
+		wp_enqueue_style(
+			'salt-shaker-widget',
+			SALT_SHAKER_PLUGIN_URL . 'assets/css/widget.css',
+			[],
+			SALT_SHAKER_VERSION
+		);
+
+		?>
+		<div class="salt-shaker-widget">
+			<?php if ( $stats['last_rotation'] ) : ?>
+				<div class="widget-section">
+					<h4><?php esc_html_e( 'Last Rotation', 'salt-shaker' ); ?></h4>
+					<div class="widget-status <?php echo esc_attr( $stats['last_rotation']['status'] ); ?>">
+						<?php if ( $stats['last_rotation']['status'] === 'success' ) : ?>
+							<span class="dashicons dashicons-yes-alt"></span>
+							<?php esc_html_e( 'Success', 'salt-shaker' ); ?>
+						<?php else : ?>
+							<span class="dashicons dashicons-warning"></span>
+							<?php esc_html_e( 'Failed', 'salt-shaker' ); ?>
+						<?php endif; ?>
+					</div>
+					<p class="widget-time">
+						<?php
+						echo esc_html(
+							sprintf(
+								/* translators: %s: human-readable time difference */
+								__( '%s ago', 'salt-shaker' ),
+								human_time_diff( strtotime( $stats['last_rotation']['rotation_time'] ), current_time( 'timestamp' ) )
+							)
+						);
+						?>
+						<br>
+						<small><?php echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $stats['last_rotation']['rotation_time'] ) ) ); ?></small>
+					</p>
+				</div>
+			<?php else : ?>
+				<div class="widget-section">
+					<p><?php esc_html_e( 'No rotations have been performed yet.', 'salt-shaker' ); ?></p>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( $stats['next_scheduled'] ) : ?>
+				<div class="widget-section">
+					<h4><?php esc_html_e( 'Next Scheduled', 'salt-shaker' ); ?></h4>
+					<p class="widget-time">
+						<?php
+						$next_timestamp = $stats['next_scheduled_timestamp'];
+						$time_until     = human_time_diff( current_time( 'timestamp' ), $next_timestamp );
+						echo esc_html(
+							sprintf(
+								/* translators: %s: human-readable time difference */
+								__( 'in %s', 'salt-shaker' ),
+								$time_until
+							)
+						);
+						?>
+						<br>
+						<small><?php echo esc_html( $stats['next_scheduled'] ); ?></small>
+					</p>
+				</div>
+			<?php endif; ?>
+
+			<div class="widget-section widget-stats">
+				<div class="stat-item">
+					<span class="stat-value"><?php echo esc_html( $stats['total_rotations'] ); ?></span>
+					<span class="stat-label"><?php esc_html_e( 'Total Rotations', 'salt-shaker' ); ?></span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-value stat-success"><?php echo esc_html( $stats['success_rate'] ); ?>%</span>
+					<span class="stat-label"><?php esc_html_e( 'Success Rate', 'salt-shaker' ); ?></span>
+				</div>
+				<?php if ( $stats['failed_30_days'] > 0 ) : ?>
+					<div class="stat-item">
+						<span class="stat-value stat-failed"><?php echo esc_html( $stats['failed_30_days'] ); ?></span>
+						<span class="stat-label"><?php esc_html_e( 'Failed (30d)', 'salt-shaker' ); ?></span>
+					</div>
+				<?php endif; ?>
+			</div>
+
+			<div class="widget-actions">
+				<a href="<?php echo esc_url( admin_url( 'tools.php?page=salt_shaker_audit' ) ); ?>" class="button button-primary">
+					<?php esc_html_e( 'View Audit Log', 'salt-shaker' ); ?>
+				</a>
+				<a href="<?php echo esc_url( admin_url( 'tools.php?page=salt_shaker' ) ); ?>" class="button button-secondary">
+					<?php esc_html_e( 'Settings', 'salt-shaker' ); ?>
+				</a>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
