@@ -79,3 +79,11 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/phpstorm
 node_modules
+
+# Testing
+/vendor/
+/coverage/
+phpunit.xml
+.phpunit.result.cache
+/tmp/
+/wordpress-tests-lib/
