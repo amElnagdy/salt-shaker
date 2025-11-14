@@ -29,6 +29,11 @@ class Plugin {
 		$core    = new Core();
 		$admin   = new Admin( $core, $options );
 		$admin->init();
+
+		// Initialize audit admin
+		$audit_admin = new AuditAdmin( $core );
+		$audit_admin->init();
+
 		$this->setup_audit_cleanup();
 		$this->load_freemius();
 		do_action( 'ss_fs_loaded' );
