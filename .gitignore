@@ -87,3 +87,4 @@ phpunit.xml
 .phpunit.result.cache
 /tmp/
 /wordpress-tests-lib/
+.github/workflows/tests.yml
