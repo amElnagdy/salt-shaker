@@ -4,7 +4,7 @@ Donate link: https://ko-fi.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.1.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,13 +78,6 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 
 == Changelog ==
-
-= 2.1.0 =
-
-* Added comprehensive audit trail logging for all salt rotations
-* Track rotation history with detailed information (date, user, method, duration, status)
-* Automatic cleanup of old logs with configurable retention periods
-* Performance improvements and better error handling
 
 = 2.0.1 =
 

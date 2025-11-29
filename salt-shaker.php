@@ -3,7 +3,7 @@
  * Plugin Name: Salt Shaker
  * Plugin URI: https://nagdy.me/
  * Description: A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security.
- * Version: 2.1.0
+ * Version: 2.0.1
  * Author: Nagdy
  * Author URI: https://nagdy.me/
  * License: GPLv2 or later
@@ -24,7 +24,6 @@
  */
 
 use SaltShaker\Plugin;
-use SaltShaker\Installer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,24 +34,20 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 /**
- * Plugin activation hook - Install database tables and default options
+ * Let's make sure that Salt Shaker PRO is not active to avoid conflicts.
  *
- * @since 2.1.0
+ * @since 1.4.0
  */
-function salt_shaker_activate() {
-	// Deactivate PRO version if active
+function salt_shaker_pro_deactivate() {
 	if ( is_plugin_active( 'salt-shaker-pro/salt-shaker-pro.php' ) ) {
 		deactivate_plugins( 'salt-shaker-pro/salt-shaker-pro.php' );
 	}
-
-	// Run installer
-	Installer::install();
 }
 
-register_activation_hook( __FILE__, 'salt_shaker_activate' );
+register_activation_hook( __FILE__, 'salt_shaker_pro_deactivate' );
 
 // Define the plugin constants
-const SALT_SHAKER_VERSION = '2.1.0';
+const SALT_SHAKER_VERSION = '2.0.1';
 define( 'SALT_SHAKER_PLUGIN_FILE', __FILE__ );
 define( 'SALT_SHAKER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SALT_SHAKER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

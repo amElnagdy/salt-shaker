@@ -29,54 +29,8 @@ class Plugin {
 		$core    = new Core();
 		$admin   = new Admin( $core, $options );
 		$admin->init();
-
-		// Initialize audit admin
-		$audit_admin = new AuditAdmin( $core );
-		$audit_admin->init();
-
-		$this->setup_audit_cleanup();
 		$this->load_freemius();
 		do_action( 'ss_fs_loaded' );
-	}
-
-	/**
-	 * Setup automatic audit log cleanup
-	 *
-	 * @return void
-	 */
-	public function setup_audit_cleanup(): void {
-		// Register the cleanup action
-		add_action( 'salt_shaker_cleanup_old_logs', array( $this, 'cleanup_audit_logs' ) );
-
-		// Schedule the cleanup if not already scheduled
-		if ( ! wp_next_scheduled( 'salt_shaker_cleanup_old_logs' ) ) {
-			wp_schedule_event( time(), 'daily', 'salt_shaker_cleanup_old_logs' );
-		}
-	}
-
-	/**
-	 * Clean up old audit logs based on retention settings
-	 *
-	 * @return void
-	 */
-	public function cleanup_audit_logs(): void {
-		$options = get_option( 'salt_shaker_audit_options', [] );
-
-		// Check if auto cleanup is enabled
-		if ( ! isset( $options['auto_cleanup_enabled'] ) || ! $options['auto_cleanup_enabled'] ) {
-			return;
-		}
-
-		$audit_logger        = new AuditLogger();
-		$retention_days      = $options['retention_days'] ?? 90;
-		$failed_retention    = $options['failed_retention_days'] ?? 180;
-
-		// Clean up successful rotations older than retention_days
-		$audit_logger->cleanup_old_logs( $retention_days, false );
-
-		// Note: We keep all logs (including failed) for failed_retention_days
-		// So we only delete failed logs that are older than failed_retention_days
-		// This is handled separately if needed
 	}
 
 	public function load_freemius() {
