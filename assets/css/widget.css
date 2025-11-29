@@ -1,0 +1,181 @@
+/* Salt Shaker Dashboard Widget Styles */
+
+.salt-shaker-widget {
+    padding: 0;
+}
+
+.salt-shaker-widget .widget-section {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.salt-shaker-widget .widget-section:last-of-type {
+    border-bottom: none;
+}
+
+.salt-shaker-widget h4 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #646970;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badge */
+.widget-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    gap: 6px;
+}
+
+.widget-status.success {
+    background: #d4f4dd;
+    color: #1e4620;
+}
+
+.widget-status.failed {
+    background: #f7d6d6;
+    color: #8b0000;
+}
+
+.widget-status .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Time Display */
+.widget-time {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1d2327;
+}
+
+.widget-time small {
+    color: #646970;
+    font-size: 12px;
+}
+
+/* Stats Grid */
+.widget-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 12px;
+    padding: 12px 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 10px;
+    background: #f6f7f7;
+    border-radius: 4px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1d2327;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.stat-value.stat-success {
+    color: #1e8f4f;
+}
+
+.stat-value.stat-failed {
+    color: #d63638;
+}
+
+.stat-label {
+    display: block;
+    font-size: 11px;
+    color: #646970;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Widget Actions */
+.widget-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    margin-top: 4px;
+}
+
+.widget-actions .button {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .widget-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .widget-actions {
+        flex-direction: column;
+    }
+
+    .widget-actions .button {
+        width: 100%;
+    }
+}
+
+/* Hover effects */
+.widget-actions .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* Empty state */
+.salt-shaker-widget .widget-section p {
+    margin: 0;
+    color: #646970;
+    font-size: 13px;
+}
+
+/* Widget header compatibility */
+#salt_shaker_audit_widget .inside {
+    margin: 0;
+    padding: 12px;
+}
+
+/* Dark mode support (WordPress 5.7+) */
+@media (prefers-color-scheme: dark) {
+    .salt-shaker-widget .widget-section {
+        border-bottom-color: #3c3c3c;
+    }
+
+    .widget-status.success {
+        background: rgba(72, 207, 133, 0.2);
+        color: #72cf85;
+    }
+
+    .widget-status.failed {
+        background: rgba(204, 73, 73, 0.2);
+        color: #e65054;
+    }
+
+    .stat-item {
+        background: #2c2c2c;
+    }
+
+    .stat-value {
+        color: #f0f0f1;
+    }
+
+    .widget-time {
+        color: #f0f0f1;
+    }
+}
