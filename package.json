@@ -15,9 +15,7 @@
     "plugin-zip": "wp-scripts plugin-zip",
     "start": "wp-scripts start",
     "test:e2e": "wp-scripts test-e2e",
-    "test:unit": "wp-scripts test-unit-js",
-    "test:php": "composer test",
-    "test": "npm run test:php && npm run test:unit"
+    "test:unit": "wp-scripts test-unit-js"
   },
   "devDependencies": {
     "@wordpress/scripts": "^31.0.0"
