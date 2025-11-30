@@ -73,7 +73,6 @@ class Installer {
 		$default_options = [
 			'retention_days'         => 90,
 			'failed_retention_days'  => 180,
-			'log_ip_addresses'       => true,
 			'log_user_agents'        => true,
 			'auto_cleanup_enabled'   => true,
 		];
@@ -115,6 +114,7 @@ class Installer {
 		$table_name = $wpdb->prefix . 'salt_shaker_audit_log';
 
 		// Drop the table
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table_name uses $wpdb->prefix which is safe
 		$wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );
 
 		// Delete options

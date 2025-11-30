@@ -3,7 +3,7 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://ko-fi.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -82,9 +82,9 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 = 2.1.0 =
 
 * Added comprehensive audit trail logging for all salt rotations
-* Track rotation history with detailed information (date, user, method, duration, status)
 * Automatic cleanup of old logs with configurable retention periods
 * Performance improvements and better error handling
+* WordPress 6.9 compatibility
 
 = 2.0.1 =
 

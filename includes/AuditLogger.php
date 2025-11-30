@@ -31,11 +31,10 @@ class AuditLogger {
 	public function start_rotation(): void {
 		$this->start_time    = microtime( true );
 		$this->rotation_data = [
-			'rotation_time'     => current_time( 'mysql' ),
+			'rotation_time'     => gmdate( 'Y-m-d H:i:s' ),
 			'triggered_by'      => get_current_user_id(),
 			'trigger_username'  => $this->get_trigger_username(),
 			'trigger_method'    => $this->get_trigger_method(),
-			'ip_address'        => $this->get_client_ip(),
 			'user_agent'        => $this->get_user_agent(),
 			'wp_version'        => get_bloginfo( 'version' ),
 			'plugin_version'    => SALT_SHAKER_VERSION,
@@ -61,7 +60,7 @@ class AuditLogger {
 		// Get next scheduled time if applicable
 		$next_scheduled = wp_next_scheduled( 'salt_shaker_change_salts' );
 		if ( $next_scheduled ) {
-			$data['next_scheduled'] = date( 'Y-m-d H:i:s', $next_scheduled );
+				$data['next_scheduled'] = gmdate( 'Y-m-d H:i:s', $next_scheduled );
 		}
 
 		return $this->insert_log( $data );
@@ -127,6 +126,7 @@ class AuditLogger {
 			$data['metadata'] = wp_json_encode( $data['metadata'] );
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Custom table for audit logging
 		$result = $wpdb->insert(
 			$table_name,
 			$data,
@@ -194,55 +194,9 @@ class AuditLogger {
 			return 'scheduled';
 		}
 
-		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			return 'cli';
-		}
-
-		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-			return 'api';
-		}
-
 		return 'manual';
 	}
 
-	/**
-	 * Get client IP address
-	 *
-	 * @return string|null
-	 */
-	private function get_client_ip(): ?string {
-		// Check if IP logging is enabled
-		$options = get_option( 'salt_shaker_audit_options', [] );
-		if ( isset( $options['log_ip_addresses'] ) && ! $options['log_ip_addresses'] ) {
-			return null;
-		}
-
-		$ip_keys = [
-			'HTTP_CLIENT_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_FORWARDED',
-			'HTTP_X_CLUSTER_CLIENT_IP',
-			'HTTP_FORWARDED_FOR',
-			'HTTP_FORWARDED',
-			'REMOTE_ADDR'
-		];
-
-		foreach ( $ip_keys as $key ) {
-			if ( ! empty( $_SERVER[ $key ] ) ) {
-				$ip = sanitize_text_field( wp_unslash( $_SERVER[ $key ] ) );
-				// Handle multiple IPs (X-Forwarded-For can contain multiple)
-				if ( strpos( $ip, ',' ) !== false ) {
-					$ip = trim( explode( ',', $ip )[0] );
-				}
-				// Validate IP
-				if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
-					return $ip;
-				}
-			}
-		}
-
-		return null;
-	}
 
 	/**
 	 * Get user agent string
@@ -261,17 +215,6 @@ class AuditLogger {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Generate SHA256 hash of salt array for verification
-	 *
-	 * @param array $salts Array of salt values
-	 *
-	 * @return string
-	 */
-	public function hash_salts( array $salts ): string {
-		return hash( 'sha256', wp_json_encode( $salts ) );
 	}
 
 	/**
@@ -320,31 +263,40 @@ class AuditLogger {
 
 		$where_clause = implode( ' AND ', $where );
 
-		// Build query
-		$query = "SELECT * FROM {$table_name} WHERE {$where_clause}";
-
-		// Add ORDER BY
+		// Validate ORDER BY parameters (whitelist approach)
 		$allowed_orderby = [ 'rotation_time', 'status', 'trigger_method', 'duration_ms' ];
-		$orderby         = in_array( $args['orderby'], $allowed_orderby ) ? $args['orderby'] : 'rotation_time';
+		$orderby         = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'rotation_time';
 		$order           = strtoupper( $args['order'] ) === 'ASC' ? 'ASC' : 'DESC';
-		$query           .= " ORDER BY {$orderby} {$order}";
 
-		// Add pagination
-		$offset = ( $args['page'] - 1 ) * $args['per_page'];
-		$query  .= $wpdb->prepare( " LIMIT %d OFFSET %d", $args['per_page'], $offset );
+		// Normalize pagination arguments to non-negative integers
+		$page     = max( 1, (int) $args['page'] );
+		$per_page = max( 1, (int) $args['per_page'] );
 
-		// Prepare full query
-		if ( ! empty( $where_args ) ) {
-			$query = $wpdb->prepare( $query, ...$where_args );
-		}
+		// Calculate pagination offset
+		$offset = ( $page - 1 ) * $per_page;
 
-		$results = $wpdb->get_results( $query, ARRAY_A );
+		// Build complete query with all placeholders
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table_name is safe (uses $wpdb->prefix), $where_clause built from whitelisted values, $orderby/$order are whitelisted
+		$query = "SELECT * FROM {$table_name} WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d";
+
+		// Combine all parameters: WHERE args + LIMIT + OFFSET
+		$all_params = array_merge( $where_args, [ $per_page, $offset ] );
+
+		// Prepare the complete query in a single operation
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query is prepared on this line with all dynamic values
+		$prepared_query = $wpdb->prepare( $query, ...$all_params );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $prepared_query was prepared above with $wpdb->prepare(), $orderby/$order are whitelisted, $where_clause uses placeholders
+		$results = $wpdb->get_results( $prepared_query, ARRAY_A );
 
 		// Get total count for pagination
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table_name is safe, $where_clause built from whitelisted values
 		$count_query = "SELECT COUNT(*) FROM {$table_name} WHERE {$where_clause}";
 		if ( ! empty( $where_args ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $count_query uses placeholders, prepared here
 			$count_query = $wpdb->prepare( $count_query, ...$where_args );
 		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $count_query is prepared above with $wpdb->prepare(), $where_clause uses placeholders
 		$total = $wpdb->get_var( $count_query );
 
 		return [
@@ -365,6 +317,7 @@ class AuditLogger {
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, no caching needed
 		$log = $wpdb->get_row(
 			$wpdb->prepare( "SELECT * FROM {$table_name} WHERE id = %d", $log_id ),
 			ARRAY_A
@@ -376,26 +329,28 @@ class AuditLogger {
 	/**
 	 * Delete logs older than specified days
 	 *
-	 * @param int  $days        Number of days to keep
-	 * @param bool $failed_only Only delete failed logs
+	 * @param int    $days   Number of days to keep
+	 * @param string $status Status to filter by ('success', 'failed', or empty for all)
 	 *
 	 * @return int Number of deleted rows
 	 */
-	public function cleanup_old_logs( int $days = 90, bool $failed_only = false ): int {
+	public function cleanup_old_logs( int $days = 90, string $status = '' ): int {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
-		$date       = date( 'Y-m-d H:i:s', strtotime( "-{$days} days" ) );
+		$date       = gmdate( 'Y-m-d H:i:s', strtotime( "-{$days} days" ) );
 
-		if ( $failed_only ) {
+		if ( $status !== '' ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, DELETE operation
 			$deleted = $wpdb->query(
 				$wpdb->prepare(
 					"DELETE FROM {$table_name} WHERE rotation_time < %s AND status = %s",
 					$date,
-					'failed'
+					$status
 				)
 			);
 		} else {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, DELETE operation
 			$deleted = $wpdb->query(
 				$wpdb->prepare(
 					"DELETE FROM {$table_name} WHERE rotation_time < %s",
@@ -418,26 +373,31 @@ class AuditLogger {
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
 
 		// Total rotations
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, stats need fresh data
 		$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
 
 		// Success count
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, stats need fresh data
 		$success_count = (int) $wpdb->get_var(
 			$wpdb->prepare( "SELECT COUNT(*) FROM {$table_name} WHERE status = %s", 'success' )
 		);
 
 		// Failed in last 30 days
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, stats need fresh data
 		$failed_30_days = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM {$table_name} WHERE status = %s AND rotation_time > %s",
 				'failed',
-				date( 'Y-m-d H:i:s', strtotime( '-30 days' ) )
+				gmdate( 'Y-m-d H:i:s', strtotime( '-30 days' ) )
 			)
 		);
 
 		// Average duration
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, stats need fresh data
 		$avg_duration = (int) $wpdb->get_var( "SELECT AVG(duration_ms) FROM {$table_name}" );
 
 		// Last rotation
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses $wpdb->prefix, custom table, need latest data
 		$last_rotation = $wpdb->get_row(
 			"SELECT * FROM {$table_name} ORDER BY rotation_time DESC LIMIT 1",
 			ARRAY_A

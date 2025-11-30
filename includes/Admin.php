@@ -26,6 +26,7 @@ class Admin {
 		add_action( 'wp_ajax_salt_shaker_get_settings', [ $this, 'ajax_get_settings' ] );
 		add_action( 'wp_ajax_salt_shaker_save_settings', [ $this, 'ajax_save_settings' ] );
 		add_action( 'wp_ajax_salt_shaker_change_salts', [ $this, 'ajax_change_salts' ] );
+		add_action( 'wp_ajax_salt_shaker_get_audit_logs', [ $this, 'ajax_get_audit_logs' ] );
 	}
 
 	/**
@@ -212,6 +213,35 @@ class Admin {
 	}
 
 	/**
+	 * AJAX: Get audit logs for rotation history
+	 */
+	public function ajax_get_audit_logs(): void {
+		check_ajax_referer( 'salt-shaker-nonce', 'nonce' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( __( 'Unauthorized access', 'salt-shaker' ) );
+		}
+
+		$audit_logger = new AuditLogger();
+
+		$page     = isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
+		$per_page = isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 5;
+		$status   = isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
+
+		$result = $audit_logger->get_logs( [
+			'page'     => $page,
+			'per_page' => $per_page,
+			'status'   => $status,
+		] );
+
+		wp_send_json_success( [
+			'logs'        => $result['logs'],
+			'total'       => $result['total'],
+			'total_pages' => ceil( $result['total'] / $per_page ),
+		] );
+	}
+
+	/**
 	 * Display admin notices for file permission issues
 	 */
 	public function display_permission_notices(): void {
@@ -239,7 +269,7 @@ class Admin {
 						),
 						$url
 					);
-					echo $link;
+					echo wp_kses_post( $link );
 					?>
                 </p>
             </div>
