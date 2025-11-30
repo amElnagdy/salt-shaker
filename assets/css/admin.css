@@ -587,3 +587,161 @@ h3 .premium-badge:not(.premium-feature-header .premium-badge):not(.premium-featu
     background: var(--ss-primary-hover);
     border-color: var(--ss-primary-hover);
 }
+
+/* Rotation History Section */
+.salt-shaker-rotation-history {
+    margin-top: var(--ss-spacing-xl);
+    padding-top: var(--ss-spacing-xl);
+    border-top: 1px solid var(--ss-border);
+}
+
+.rotation-history-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--ss-spacing);
+}
+
+.rotation-history-title h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.rotation-history-title .settings-link {
+    font-size: 13px;
+}
+
+.rotation-history-header {
+    display: flex;
+    align-items: center;
+    gap: var(--ss-spacing);
+    margin-bottom: var(--ss-spacing);
+}
+
+.rotation-history-header .components-base-control {
+    margin-bottom: 0;
+}
+
+.rotation-history-header .components-select-control__input {
+    min-width: 120px;
+}
+
+.rotation-history-loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--ss-spacing-lg);
+}
+
+.rotation-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.rotation-history-table th,
+.rotation-history-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.rotation-history-table th {
+    font-weight: 600;
+    background: var(--ss-light-bg);
+}
+
+.rotation-history-table tbody tr:hover {
+    background: var(--ss-light-bg);
+}
+
+.rotation-history-table .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.rotation-history-table .status-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rotation-history-table .status-failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.rotation-history-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ss-spacing);
+    margin-top: var(--ss-spacing);
+    padding-top: var(--ss-spacing);
+}
+
+.rotation-history-pagination span {
+    font-size: 13px;
+    color: var(--ss-text-secondary);
+}
+
+.salt-shaker-rotation-history .no-logs {
+    color: var(--ss-text-secondary);
+    font-style: italic;
+}
+
+/* Detail Modal */
+.salt-shaker-detail-modal .detail-section {
+    margin-bottom: var(--ss-spacing);
+    padding-bottom: var(--ss-spacing);
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.salt-shaker-detail-modal .detail-section:last-of-type {
+    border-bottom: none;
+}
+
+.salt-shaker-detail-modal .detail-section h3 {
+    margin: 0 0 var(--ss-spacing-xs) 0;
+    font-size: 14px;
+    color: var(--ss-text-secondary);
+}
+
+.salt-shaker-detail-modal .detail-section p {
+    margin: 4px 0;
+    font-size: 13px;
+}
+
+.salt-shaker-detail-modal .detail-error {
+    background: #fff5f5;
+    padding: var(--ss-spacing);
+    border-radius: 4px;
+    border: 1px solid #f8d7da;
+}
+
+.salt-shaker-detail-modal .error-message {
+    color: var(--ss-error);
+}
+
+.salt-shaker-detail-modal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--ss-spacing);
+}
+
+/* Settings Modal */
+.salt-shaker-settings-modal .settings-field {
+    margin-bottom: var(--ss-spacing);
+}
+
+.salt-shaker-settings-modal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ss-spacing-sm);
+    margin-top: var(--ss-spacing-lg);
+    padding-top: var(--ss-spacing);
+    border-top: 1px solid var(--ss-border);
+}

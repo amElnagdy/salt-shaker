@@ -4,6 +4,7 @@ import {Card, CardBody, CardHeader} from "@wordpress/components";
 import CurrentSalts from "./components/CurrentSalts";
 import ScheduledChange from "./components/ScheduledChange";
 import ImmediateChange from "./components/ImmediateChange";
+import RotationHistory from "./components/RotationHistory";
 import ProFeatures from "./components/ProFeatures";
 
 function SaltShakerAdmin() {
@@ -55,6 +56,7 @@ function SaltShakerAdmin() {
                             <CurrentSalts isConfigWritable={isConfigWritable}/>
                             <ScheduledChange isConfigWritable={isConfigWritable}/>
                             <ImmediateChange isConfigWritable={isConfigWritable}/>
+                            <RotationHistory />
 
                             <p className="rate-plugin">
                                 {__("Do you find this plugin useful? Please", "salt-shaker")}{" "}

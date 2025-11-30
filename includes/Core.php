@@ -51,11 +51,8 @@ class Core {
 		$audit_logger = new AuditLogger();
 		$audit_logger->start_rotation();
 
-		// Get current salts for hash comparison
-		$old_salts      = $this->getSaltsArray();
-		$old_salt_hash  = $audit_logger->hash_salts( $old_salts );
-		$config_file    = $this->getConfigFile();
-		$salt_source    = 'wordpress_api';
+		$config_file = $this->getConfigFile();
+		$salt_source = 'wordpress_api';
 
 		try {
 			$http_salts = wp_remote_get( 'https://api.wordpress.org/secret-key/1.1/salt/' );
@@ -89,15 +86,9 @@ class Core {
 			$result = $this->writeSalts( $salt_keys, $new_salts );
 
 			if ( $result ) {
-				// Get new salts hash after successful write
-				$new_salts_array = $this->getSaltsArray();
-				$new_salt_hash   = $audit_logger->hash_salts( $new_salts_array );
-
 				// Log successful rotation
 				$audit_logger->log_success( [
 					'salt_source'      => $salt_source,
-					'old_salt_hash'    => $old_salt_hash,
-					'new_salt_hash'    => $new_salt_hash,
 					'config_file_path' => $config_file,
 					'affected_users'   => $this->count_active_sessions(),
 				] );
@@ -108,7 +99,6 @@ class Core {
 				$audit_logger->log_failure( [
 					'error_message'    => __( 'Failed to write salts to configuration file.', 'salt-shaker' ),
 					'config_file_path' => $config_file,
-					'old_salt_hash'    => $old_salt_hash,
 				] );
 
 				return false;
@@ -118,7 +108,6 @@ class Core {
 			$audit_logger->log_failure( [
 				'error_message'    => $e->getMessage(),
 				'config_file_path' => $config_file,
-				'old_salt_hash'    => $old_salt_hash,
 			] );
 
 			return false;
