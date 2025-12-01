@@ -3,7 +3,7 @@
         'name' => 'nagdy/salt-shaker',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4016d9c5e22f87e7cb6fd6fead082d6a5af4c603',
+        'reference' => '735751c423018c077d74900bc55b6ca1ddecf595',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'nagdy/salt-shaker' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4016d9c5e22f87e7cb6fd6fead082d6a5af4c603',
+            'reference' => '735751c423018c077d74900bc55b6ca1ddecf595',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

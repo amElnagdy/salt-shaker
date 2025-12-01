@@ -37,8 +37,6 @@ class Plugin {
 		$audit_admin->init();
 
 		$this->setup_audit_cleanup();
-		$this->load_freemius();
-		do_action( 'ss_fs_loaded' );
 	}
 
 	/**
@@ -91,33 +89,6 @@ class Plugin {
 
 		// Clean up failed logs older than failed_retention_days (kept longer)
 		$audit_logger->cleanup_old_logs( $failed_retention, 'failed' );
-	}
-
-	public function load_freemius() {
-		global $ss_fs;
-		if ( ! isset( $ss_fs ) ) {
-			$ss_fs = fs_dynamic_init( array(
-				'id'              => '8851',
-				'slug'            => 'salt-shaker',
-				'premium_slug'    => 'salt-shaker-pro',
-				'type'            => 'plugin',
-				'public_key'      => 'pk_f3d8cc8437a2ffddb2e1db1c8ad0e',
-				'is_premium'      => false,
-				'is_premium_only' => false,
-				'has_addons'      => false,
-				'has_paid_plans'  => true,
-				'menu'            => array(
-					'slug'       => 'salt_shaker',
-					'first-path' => 'tools.php?page=salt_shaker',
-					'contact'    => false,
-					'parent'     => array(
-						'slug' => 'tools.php',
-					),
-				),
-			) );
-		}
-
-		return $ss_fs;
 	}
 
 }

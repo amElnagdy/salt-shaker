@@ -3,7 +3,7 @@
  * Plugin Name: Salt Shaker
  * Plugin URI: https://nagdy.me/
  * Description: A plugin that changes WordPress Authentication Unique Keys and Salts to enhance and strengthen WordPress security.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: Nagdy
  * Author URI: https://nagdy.me/
  * License: GPLv2 or later
@@ -31,7 +31,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	// Verify Freemius SDK files exist before loading to prevent fatal errors.
+	$freemius_sdk_path = __DIR__ . '/vendor/freemius/wordpress-sdk/includes/class-freemius.php';
+	if ( ! file_exists( $freemius_sdk_path ) ) {
+		add_action( 'admin_notices', function() {
+			echo '<div class="notice notice-error"><p><strong>Salt Shaker:</strong> Plugin files are incomplete. Please reinstall the plugin.</p></div>';
+		} );
+		return;
+	}
 	require_once __DIR__ . '/vendor/autoload.php';
+}
+
+if ( function_exists( 'fs_dynamic_init' ) && ! function_exists( 'ss_fs' ) ) {
+	// Create a helper function for easy SDK access.
+	function ss_fs() {
+		global $ss_fs;
+
+		if ( ! isset( $ss_fs ) ) {
+			// SDK is auto-loaded through Composer.
+			$ss_fs = fs_dynamic_init( array(
+				'id'                => '8851',
+				'slug'              => 'salt-shaker',
+				'premium_slug'      => 'salt-shaker-pro',
+				'type'              => 'plugin',
+				'public_key'        => 'pk_f3d8cc8437a2ffddb2e1db1c8ad0e',
+				'is_premium'        => false,
+				'is_premium_only'   => false,
+				'has_addons'        => false,
+				'has_paid_plans'    => true,
+				'menu'              => array(
+					'slug'       => 'salt_shaker',
+					'first-path' => 'tools.php?page=salt_shaker',
+					'support'    => false,
+					'parent'     => array(
+						'slug' => 'tools.php',
+					),
+				),
+			) );
+		}
+
+		return $ss_fs;
+	}
+
+	// Init Freemius.
+	ss_fs();
+	// Signal that SDK was initiated.
+	do_action( 'ss_fs_loaded' );
 }
 
 /**

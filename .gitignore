@@ -80,8 +80,13 @@ fabric.properties
 # End of https://www.gitignore.io/api/phpstorm
 node_modules
 
+# Vendor - only include freemius SDK
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer/
+!/vendor/freemius/
+
 # Testing
-/vendor/
 /coverage/
 phpunit.xml
 .phpunit.result.cache

@@ -4,7 +4,7 @@ Donate link: https://ko-fi.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 
 == Changelog ==
+
+= 2.1.1 =
+
+* Fixed an issue with 2.1.0 not working because of a missing Freemius SDK file.
 
 = 2.1.0 =
 

@@ -22,6 +22,10 @@ phpcs.ruleset.xml
 README.md
 wp-cli.local.yml
 node_modules
+composer.json
+tests
+phpunit.xml
+phpunit.xml.dist
 *.sql
 *.tar.gz
 *.zip

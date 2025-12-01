@@ -9,6 +9,6 @@
         }
     },
     "require": {
-        "freemius/wordpress-sdk": "^2.11"
+        "freemius/wordpress-sdk": "^2.13"
     }
 }
