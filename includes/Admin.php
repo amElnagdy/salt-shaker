@@ -96,7 +96,7 @@ class Admin {
 		wp_register_script(
 			'salt-shaker-admin',
 			SALT_SHAKER_PLUGIN_URL . 'assets/build/admin.js',
-			[ 'wp-element', 'wp-components', 'wp-i18n', 'jquery' ],
+			[ 'wp-element', 'wp-components', 'wp-i18n' ],
 			SALT_SHAKER_VERSION,
 			true
 		);

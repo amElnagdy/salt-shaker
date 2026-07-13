@@ -9,25 +9,29 @@ function ImmediateChange({isConfigWritable}) {
 
     const handleChangeSalts = () => {
         setLoading(true);
-        jQuery.ajax({
-            url: saltShakerData.ajaxUrl,
-            type: "POST",
-            data: {
+        fetch(saltShakerData.ajaxUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
                 action: "salt_shaker_change_salts",
                 nonce: saltShakerData.nonce,
-            },
-            success: function (response) {
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
                 setMessage({
-                    type: response.success ? "success" : "error",
-                    content: response.success
+                    type: data.success ? "success" : "error",
+                    content: data.success
                         ? __(
                             "Salt keys have been updated. You will be redirected to login...",
                             "salt-shaker"
                         )
-                        : response.data,
+                        : data.data,
                 });
 
-                if (response.success) {
+                if (data.success) {
                     setTimeout(() => {
                         window.location.href =
                             saltShakerData.loginUrl +
@@ -38,17 +42,17 @@ function ImmediateChange({isConfigWritable}) {
                 }
 
                 setLoading(false);
-            },
-            error: function (xhr, status, error) {
+            })
+            .catch(() => {
                 setMessage({
                     type: "error",
-                    content:
-                        error ||
-                        __("An error occurred while changing salt keys.", "salt-shaker"),
+                    content: __(
+                        "An error occurred while changing salt keys.",
+                        "salt-shaker"
+                    ),
                 });
                 setLoading(false);
-            },
-        });
+            });
     };
 
     const openConfirmModal = () => {

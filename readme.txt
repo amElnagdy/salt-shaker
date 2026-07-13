@@ -3,8 +3,9 @@ Contributors: nagdy, ahmedgeek
 Donate link: https://ko-fi.com/nagdy
 Tags: security, salts, salt keys, security keys, authentication keys
 Requires at least: 5.0
-Tested up to: 6.9
-Stable tag: 2.1.1
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +79,13 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 
 
 == Changelog ==
+
+= 2.2.0 =
+
+* Synchronized all plugin version references to 2.2.0.
+* Declared minimum PHP requirement (Requires PHP: 7.4).
+* Updated WordPress compatibility metadata for WordPress 7 readiness.
+* Internal: replaced the remaining legacy jQuery AJAX calls with the native fetch API and removed the jQuery dependency from the admin screen (no change to behavior, endpoints, or security).
 
 = 2.1.1 =
 
