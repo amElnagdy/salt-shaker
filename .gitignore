@@ -92,3 +92,21 @@ phpunit.xml
 .phpunit.result.cache
 /tmp/
 /wordpress-tests-lib/
+
+# Logs and environment
+*.log
+.env*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+
+# Local planning docs and agent tooling
+/specs/
+/.specify/
+/.claude/
+/.opencode/
+/plan.md

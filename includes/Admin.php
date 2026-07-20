@@ -65,8 +65,8 @@ class Admin {
                 <p>
 					<?php
 					printf(
-					/* translators: 1: https://codex.wordpress.org/Changing_File_Permissions */
 						wp_kses(
+							/* translators: %1$s: URL of the WordPress documentation page on changing file permissions. */
 							__( 'The file which contains your salt keys is not writable. First, make sure it exists then read how to setup the correct permissions on <a href="%1$s">WordPress codex</a>.', 'salt-shaker' ),
 							array(
 								'code' => array(),
@@ -205,8 +205,16 @@ class Admin {
 		}
 
 		try {
-			$this->core->shuffleSalts();
-			wp_send_json_success( __( 'Salt keys updated successfully', 'salt-shaker' ) );
+			$result = $this->core->shuffleSalts();
+			if ( ! $result ) {
+				$reason = $this->core->getLastFailureReason();
+				if ( empty( $reason ) ) {
+					$reason = __( 'Salt keys could not be updated. Please check the audit logs for details.', 'salt-shaker' );
+				}
+				wp_send_json_error( $reason );
+			} else {
+				wp_send_json_success( __( 'Salt keys updated successfully', 'salt-shaker' ) );
+			}
 		} catch ( Exception $e ) {
 			wp_send_json_error( $e->getMessage() );
 		}

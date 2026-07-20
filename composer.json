@@ -1,14 +1,32 @@
 {
-    "name": "nagdy/salt-shaker",
-    "description": "A WordPress plugin to manage salt keys",
-    "type": "wordpress-plugin",
-    "license": "GPL-2.0-or-later",
-    "autoload": {
-        "psr-4": {
-            "SaltShaker\\": "includes/"
-        }
-    },
-    "require": {
-        "freemius/wordpress-sdk": "^2.13"
-    }
+	"name": "nagdy/salt-shaker",
+	"description": "A WordPress plugin to manage salt keys",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"autoload": {
+		"psr-4": {
+			"SaltShaker\\": "includes/"
+		}
+	},
+	"require": {
+		"freemius/wordpress-sdk": "^2.13"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9",
+		"brain/monkey": "^2",
+		"wp-coding-standards/wpcs": "^3.4"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SaltShaker\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"test": "phpunit -c phpunit.xml.dist"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }

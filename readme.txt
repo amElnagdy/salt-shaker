@@ -85,6 +85,10 @@ add_filter('salt_shaker_salts_file', 'salt_shaker_new_file');`
 * Synchronized all plugin version references to 2.2.0.
 * Declared minimum PHP requirement (Requires PHP: 7.4).
 * Updated WordPress compatibility metadata for WordPress 7 readiness.
+* Migrated all salt-definition file reads, writes, and permission checks to the WordPress Filesystem API for compatibility with hosts that require the `WP_Filesystem` abstraction.
+* Fixed a reporting defect where a failed manual salt rotation was incorrectly returned to the admin UI as successful.
+* Strengthened failure handling: a failed rotation now leaves the configuration file untouched and removes any temporary working file.
+* Preserved existing behavior on standard hosts: line terminators, non-salt content, and file permissions are retained across rotations.
 * Internal: replaced the remaining legacy jQuery AJAX calls with the native fetch API and removed the jQuery dependency from the admin screen (no change to behavior, endpoints, or security).
 
 = 2.1.1 =

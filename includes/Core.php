@@ -23,6 +23,31 @@ class Core {
 	}
 
 	/**
+	 * Prepare WordPress filesystem access.
+	 *
+	 * @return object|false The filesystem handle, or false if not available.
+	 */
+	private function initFilesystem() {
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		if ( ! function_exists( 'get_filesystem_method' ) || 'direct' !== get_filesystem_method() ) {
+			return false;
+		}
+
+		if ( ! WP_Filesystem() ) {
+			return false;
+		}
+
+		if ( ! isset( $GLOBALS['wp_filesystem'] ) || ! is_object( $GLOBALS['wp_filesystem'] ) ) {
+			return false;
+		}
+
+		return $GLOBALS['wp_filesystem'];
+	}
+
+	/**
 	 * Get the current salt values from wp-config.php
 	 *
 	 * @return array
@@ -95,9 +120,14 @@ class Core {
 
 				return true;
 			} else {
-				// Log failed rotation
+				// Log failed rotation with the specific reason from writeSalts().
+				$failure_reason = $this->getLastFailureReason();
+				if ( empty( $failure_reason ) ) {
+					$failure_reason = __( 'Failed to write salts to configuration file.', 'salt-shaker' );
+				}
+
 				$audit_logger->log_failure( [
-					'error_message'    => __( 'Failed to write salts to configuration file.', 'salt-shaker' ),
+					'error_message'    => $failure_reason,
 					'config_file_path' => $config_file,
 				] );
 
@@ -175,6 +205,29 @@ class Core {
 	}
 
 	/**
+	 * Failure reason from the most recent filesystem-related call.
+	 *
+	 * @var string
+	 */
+	private $last_failure_reason = '';
+
+	/**
+	 * Resolved config file path, even when the file is not writable.
+	 *
+	 * @var string
+	 */
+	private $last_config_file_path = '';
+
+	/**
+	 * Get the failure reason from the most recent writeSalts() call.
+	 *
+	 * @return string
+	 */
+	public function getLastFailureReason(): string {
+		return $this->last_failure_reason;
+	}
+
+	/**
 	 * Write new salt keys to wp-config.php
 	 *
 	 * @param array $salt_keys Array of salt key names
@@ -183,83 +236,94 @@ class Core {
 	 * @return bool
 	 */
 	private function writeSalts( array $salt_keys, array $new_salts ): bool {
+		$this->last_failure_reason = '';
+
+		$fs = $this->initFilesystem();
+		if ( ! $fs ) {
+			$this->last_failure_reason = __( 'Filesystem access is not available.', 'salt-shaker' );
+			return false;
+		}
+
 		$config_file = $this->getConfigFile();
 		if ( ! $config_file ) {
+			if ( ! $this->last_failure_reason ) {
+				$this->last_failure_reason = __( 'Salt definitions file not found or not writable.', 'salt-shaker' );
+			}
 			return false;
 		}
 
-		// Store original permissions
-		$original_perms = fileperms( $config_file );
-		if ( false === $original_perms ) {
+		$original_content = $fs->get_contents( $config_file );
+		if ( false === $original_content || '' === $original_content ) {
+			$this->last_failure_reason = __( 'Failed to read the salt definitions file.', 'salt-shaker' );
 			return false;
 		}
 
-		// Create a unique temporary file
+		$chmod_string = $fs->getchmod( $config_file );
+		$original_mode = is_numeric( $chmod_string ) ? intval( $chmod_string, 8 ) : null;
+
 		$tmp_config_file = $config_file . '.tmp.' . uniqid( '', true );
 
 		try {
-			// Read the original file line by line
-			$reading = fopen( $config_file, 'r' );
-			if ( ! $reading ) {
-				return false;
-			}
-			
-			// Create new file
-			$writing = fopen( $tmp_config_file, 'w' );
-			if ( ! $writing ) {
-				fclose( $reading );
-				return false;
-			}
+			$segments = preg_split( '/(\r\n|\n|\r)/', $original_content, -1, PREG_SPLIT_DELIM_CAPTURE );
+			$count    = count( $segments );
 
-			// Create an array to track which keys have been replaced
 			$replaced_keys = array_fill_keys( array_keys( $salt_keys ), false );
-			
-			while ( ! feof( $reading ) ) {
-				$line = fgets( $reading );
-				$line_replaced = false;
-				
-				// Replace salt lines in place when found
+			$new_content   = '';
+
+			for ( $i = 0; $i < $count; $i++ ) {
+				$segment = $segments[ $i ];
+
+				// Terminators are attached to the line that precedes them.
+				if ( preg_match( '/^(\r\n|\n|\r)$/', $segment ) ) {
+					continue;
+				}
+
+				$terminator = '';
+				if ( $i + 1 < $count && preg_match( '/^(\r\n|\n|\r)$/', $segments[ $i + 1 ] ) ) {
+					$terminator = $segments[ $i + 1 ];
+				}
+
+				$line = $segment . $terminator;
+
 				foreach ( $salt_keys as $key => $salt_key ) {
-					// Skip keys that have already been replaced
-					if ( $replaced_keys[$key] ) {
+					if ( $replaced_keys[ $key ] ) {
 						continue;
 					}
-					
-					// Use regex pattern to match salt definitions more precisely
-					// This will match define('KEY_NAME', 'value'); with any spacing or quote style
+
 					$pattern = "/define\s*\(\s*['\"]" . preg_quote( $salt_key, '/' ) . "['\"][\s,]*['\"].*?['\"]\s*\)\s*;/i";
 					if ( preg_match( $pattern, $line ) ) {
-						// Check if we have a valid salt at this index
-						if ( isset( $new_salts[$key] ) && !empty( trim( $new_salts[$key] ) ) ) {
-							$line = $new_salts[$key] . "\n";
-							$replaced_keys[$key] = true;
-							$line_replaced = true;
+						if ( isset( $new_salts[ $key ] ) && ! empty( trim( $new_salts[ $key ] ) ) ) {
+							$line = $new_salts[ $key ] . $terminator;
+							$replaced_keys[ $key ] = true;
 						}
 						break;
 					}
 				}
-				
-				fputs( $writing, $line );
+
+				$new_content .= $line;
 			}
 
-			fclose( $reading );
-			
-			fclose( $writing );
-			
-			// Apply the changes
-			if ( ! rename( $tmp_config_file, $config_file ) ) {
-				unlink( $tmp_config_file );
+			if ( ! $fs->put_contents( $tmp_config_file, $new_content, $original_mode ) ) {
+				$fs->delete( $tmp_config_file );
+				$this->last_failure_reason = __( 'Failed to write the temporary configuration file.', 'salt-shaker' );
 				return false;
 			}
-			
-			// Restore permissions
-			chmod( $config_file, $original_perms );
-			
+
+			if ( ! $fs->move( $tmp_config_file, $config_file, true ) ) {
+				$fs->delete( $tmp_config_file );
+				$this->last_failure_reason = __( 'Failed to replace the configuration file.', 'salt-shaker' );
+				return false;
+			}
+
+			if ( null !== $original_mode ) {
+				$fs->chmod( $config_file, $original_mode );
+			}
+
 			return true;
 		} catch ( Exception $e ) {
-			// Clean up on failure
-			if ( file_exists( $tmp_config_file ) ) {
-				unlink( $tmp_config_file );
+			$this->last_failure_reason = $e->getMessage();
+			if ( $fs->exists( $tmp_config_file ) ) {
+				$fs->delete( $tmp_config_file );
 			}
 			return false;
 		}
@@ -271,19 +335,36 @@ class Core {
 	 * @return string|false
 	 */
 	private function getConfigFile() {
+		$fs = $this->initFilesystem();
+		if ( ! $fs ) {
+			$this->last_failure_reason     = __( 'Filesystem access is not available.', 'salt-shaker' );
+			$this->last_config_file_path   = '';
+			return false;
+		}
+
 		// Check if the file name is wp-salt.php used in some hosting providers
 		$wp_salts_file   = 'wp-salt';
-		$salts_file_name = ( file_exists( ABSPATH . $wp_salts_file . '.php' ) )
+		$salts_file_name = ( $fs->exists( ABSPATH . $wp_salts_file . '.php' ) )
 			? $wp_salts_file
 			: apply_filters( 'salt_shaker_salts_file', 'wp-config' );
 
 		$config_file    = ABSPATH . $salts_file_name . '.php';
 		$config_file_up = ABSPATH . '../' . $salts_file_name . '.php';
 
-		if ( file_exists( $config_file ) && is_writable( $config_file ) ) {
+		if ( $fs->exists( $config_file ) && $fs->is_writable( $config_file ) ) {
+			$this->last_config_file_path = $config_file;
 			return $config_file;
-		} elseif ( file_exists( $config_file_up ) && is_writable( $config_file_up ) && ! file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+		} elseif ( $fs->exists( $config_file_up ) && $fs->is_writable( $config_file_up ) && ! $fs->exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+			$this->last_config_file_path = $config_file_up;
 			return $config_file_up;
+		}
+
+		if ( $fs->exists( $config_file ) || $fs->exists( $config_file_up ) ) {
+			$this->last_failure_reason   = __( 'Salt definitions file is not writable.', 'salt-shaker' );
+			$this->last_config_file_path = $fs->exists( $config_file ) ? $config_file : $config_file_up;
+		} else {
+			$this->last_failure_reason   = __( 'Salt definitions file not found.', 'salt-shaker' );
+			$this->last_config_file_path = '';
 		}
 
 		return false;
@@ -358,9 +439,30 @@ class Core {
 	 * }
 	 */
 	public function checkConfigFilePermissions(): array {
+		$fs = $this->initFilesystem();
+		if ( ! $fs ) {
+			return [
+				'writable' => false,
+				'message'  => __( 'Filesystem access is not available, so the salt definitions file cannot be checked.', 'salt-shaker' ),
+				'file'     => ''
+			];
+		}
+
 		$config_file = $this->getConfigFile();
 
 		if ( ! $config_file ) {
+			if ( 'Salt definitions file is not writable.' === $this->getLastFailureReason() && $this->last_config_file_path ) {
+				return [
+					'writable' => false,
+					'message'  => sprintf(
+					/* translators: %s: wp-config.php file path */
+						__( 'wp-config.php file (%s) is not writable. Please check file permissions.', 'salt-shaker' ),
+						$this->last_config_file_path
+					),
+					'file'     => $this->last_config_file_path
+				];
+			}
+
 			return [
 				'writable' => false,
 				'message'  => __( 'wp-config.php file not found or not accessible.', 'salt-shaker' ),
@@ -368,7 +470,7 @@ class Core {
 			];
 		}
 
-		if ( ! is_writable( $config_file ) ) {
+		if ( ! $fs->is_writable( $config_file ) ) {
 			return [
 				'writable' => false,
 				'message'  => sprintf(
