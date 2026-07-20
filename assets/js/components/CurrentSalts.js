@@ -13,23 +13,26 @@ function CurrentSalts({isConfigWritable}) {
             return;
         }
 
-        jQuery.ajax({
-            url: saltShakerData.ajaxUrl,
-            type: "POST",
-            data: {
+        fetch(saltShakerData.ajaxUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
                 action: "salt_shaker_get_settings",
                 nonce: saltShakerData.nonce,
-            },
-            success: function (response) {
-                if (response.success) {
-                    setSalts(response.data.currentSalts);
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    setSalts(data.data.currentSalts);
                 }
                 setLoading(false);
-            },
-            error: function () {
+            })
+            .catch(() => {
                 setLoading(false);
-            },
-        });
+            });
     }, [isConfigWritable]);
 
     if (loading) {

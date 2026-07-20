@@ -13,46 +13,53 @@ function ScheduledChange({isConfigWritable}) {
     });
 
     useEffect(() => {
-        jQuery.ajax({
-            url: saltShakerData.ajaxUrl,
-            type: "POST",
-            data: {
+        fetch(saltShakerData.ajaxUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
                 action: "salt_shaker_get_settings",
                 nonce: saltShakerData.nonce,
-            },
-            success: function (response) {
-                if (response.success) {
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
                     setSettings({
-                        autoUpdateEnabled: response.data.autoUpdateEnabled,
-                        updateInterval: response.data.updateInterval,
-                        nextScheduledDate: response.data.nextScheduledDate || null,
+                        autoUpdateEnabled: data.data.autoUpdateEnabled,
+                        updateInterval: data.data.updateInterval,
+                        nextScheduledDate: data.data.nextScheduledDate || null,
                     });
                 }
                 setLoading(false);
-            },
-            error: function () {
+            })
+            .catch(() => {
                 setLoading(false);
-            },
-        });
+            });
     }, []);
 
     const handleSaveSettings = () => {
         setSaving(true);
-        jQuery.ajax({
-            url: saltShakerData.ajaxUrl,
-            type: "POST",
-            data: {
+        fetch(saltShakerData.ajaxUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
                 action: "salt_shaker_save_settings",
                 nonce: saltShakerData.nonce,
                 autoUpdateEnabled: settings.autoUpdateEnabled,
                 updateInterval: settings.updateInterval,
-            },
-            success: function (response) {
-                if (response.success) {
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
                     setMessage({
                         type: "success",
                         content:
-                            response.data.message ||
+                            data.data.message ||
                             __("Settings saved successfully", "salt-shaker"),
                     });
 
@@ -63,21 +70,21 @@ function ScheduledChange({isConfigWritable}) {
                 } else {
                     setMessage({
                         type: "error",
-                        content: response.data,
+                        content: data.data,
                     });
                     setSaving(false);
                 }
-            },
-            error: function (xhr, status, error) {
+            })
+            .catch(() => {
                 setMessage({
                     type: "error",
-                    content:
-                        error ||
-                        __("An error occurred while saving settings.", "salt-shaker"),
+                    content: __(
+                        "An error occurred while saving settings.",
+                        "salt-shaker"
+                    ),
                 });
                 setSaving(false);
-            },
-        });
+            });
     };
 
     if (loading) {
