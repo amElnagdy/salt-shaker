@@ -32,3 +32,10 @@ phpunit.xml.dist
 *~
 webpack.config.js
 .github
+
+# Contributor docs and local tooling config.
+AGENTS.md
+CLAUDE.md
+patchwork.json
+.prettierignore
+.eslintignore
